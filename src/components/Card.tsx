@@ -11,6 +11,7 @@ type CardProps = {
   title: string;
   description: string;
   color: string;
+  bg: string;
 };
 
 const Card: React.FC<CardProps> = ({
@@ -20,17 +21,19 @@ const Card: React.FC<CardProps> = ({
   title,
   description,
   color,
+  bg,
 }) => {
   return (
     <MuiCard
       sx={{
         width: '100%',
+        backgroundColor: bg,
         position: 'relative',
         '&:hover': {
           top: '-5px',
         },
         '& .MuiCardContent-root': {
-          borderBottom: `3px solid ${color}`,
+          borderBottom: `2px solid ${color}`,
         },
         '& .MuiTypography-root': {
           textDecoration: 'none',
@@ -50,7 +53,7 @@ const Card: React.FC<CardProps> = ({
           }}
         />
       </CardMedia>
-      <CardContent>
+      <CardContent style={{ backgroundColor: 'white' }}>
         <Typography
           gutterBottom
           variant="h5"

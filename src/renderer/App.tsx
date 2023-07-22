@@ -5,7 +5,7 @@ import CardsPage from '../pages/CardsPage';
 import ImagesPage from '../pages/ImagesPage';
 import InternationalNamesPage from '../pages/InternationalNamesPage';
 import NamesPage from '../pages/NamesPage';
-import NumbersPage from '../pages/NumbersPage';
+import NumbersPage from '../pages/NumbersPage/NumbersPage';
 import WordsPage from '../pages/WordsPage';
 
 import './App.css';

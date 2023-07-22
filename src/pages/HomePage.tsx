@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
-import Header from '../components/Header';
-
 import Card from '../components/Card';
 import Item from '../components/Item';
+
+import { memoryTypes } from '../config/theme';
 
 import Cards from '../images/dashboard_cards/cards.png';
 import Images from '../images/dashboard_cards/images.png';
@@ -17,10 +17,8 @@ import Words from '../images/dashboard_cards/words.png';
 
 const HomePage = () => {
   return (
-    <div>
-      <Header />
-
-      <Box sx={{ padding: '20px' }}>
+    <div style={{ padding: '15px' }}>
+      <Box>
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} sm={6} md={4}>
             <Item>
@@ -29,7 +27,8 @@ const HomePage = () => {
                   image={Cards}
                   title="Cards"
                   description="Memorize playing cards."
-                  color="#DB2828"
+                  bg={memoryTypes.cards.background}
+                  color={memoryTypes.cards.color}
                 />
               </Link>
             </Item>
@@ -39,9 +38,11 @@ const HomePage = () => {
               <Link to="/images">
                 <Card
                   image={Images}
+                  width="70%"
                   title="Images"
                   description="Memorize random images."
-                  color="#8B6904"
+                  bg={memoryTypes.images.background}
+                  color={memoryTypes.images.color}
                 />
               </Link>
             </Item>
@@ -51,10 +52,11 @@ const HomePage = () => {
               <Link to="/international-names">
                 <Card
                   image={InternationalNames}
-                  width="70%"
+                  width="60%"
                   title="International Names"
                   description="Memorize international names."
-                  color="#B5CC18"
+                  color={memoryTypes.internationalNames.color}
+                  bg={memoryTypes.internationalNames.background}
                 />
               </Link>
             </Item>
@@ -64,10 +66,11 @@ const HomePage = () => {
               <Link to="/names">
                 <Card
                   image={Names}
-                  width="70%"
+                  width="60%"
                   title="Names"
                   description="Memorize people's names."
-                  color="#188732"
+                  color={memoryTypes.names.color}
+                  bg={memoryTypes.names.background}
                 />
               </Link>
             </Item>
@@ -77,9 +80,11 @@ const HomePage = () => {
               <Link to="/numbers">
                 <Card
                   image={Numbers}
+                  width="70%"
                   title="Numbers"
                   description="Memorize random numbers."
-                  color="#1E7AEB"
+                  color={memoryTypes.numbers.color}
+                  bg={memoryTypes.numbers.background}
                 />
               </Link>
             </Item>
@@ -91,7 +96,8 @@ const HomePage = () => {
                   image={Words}
                   title="Words"
                   description="Memorize random words."
-                  color="#A333C8"
+                  color={memoryTypes.words.color}
+                  bg={memoryTypes.words.background}
                 />
               </Link>
             </Item>

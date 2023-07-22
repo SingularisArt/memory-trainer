@@ -1,14 +1,16 @@
-import { mainTheme, memoryTypes } from '../config/theme';
+import Header from '../../components/Header';
+import Button from '../../components/Button';
 
-import Header from '../components/Header';
-import Button from '../components/Button';
+import './NumbersPage.css';
 
-import Names from '../images/headers/names.png';
+import { mainTheme, memoryTypes } from '../../config/theme';
+
+import Numbers from '../../images/headers/numbers.png';
 
 const onClick = ({ close }) => {
   return (
     <div className="modal">
-      <div className="header">Names Preferences</div>
+      <div className="header">Numbers Preferences</div>
       <div className="content">hi</div>
       <div className="actions">
         <Button
@@ -31,12 +33,21 @@ const onClick = ({ close }) => {
   );
 };
 
-const NamesPage = () => {
+const Home = () => {
+  return <div></div>;
+};
+
+const Slider = () => {};
+const Fill = () => {};
+const Status = () => {};
+
+const NumbersPage = () => {
   return (
     <div>
-      <Header title="Names" color={memoryTypes.names.color} image={Names} onClick={onClick} />
+      <Header title="Numbers" color={memoryTypes.numbers.color} image={Numbers} onClick={onClick} />
+      <Home />
     </div>
   );
 };
 
-export default NamesPage;
+export default NumbersPage;
