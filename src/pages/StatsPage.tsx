@@ -3,7 +3,7 @@ import { mainTheme, memoryTypes } from '../config/theme';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
-import Cards from '../images/headers/cards.png';
+// import Stats from '../images/headers/stats.png';
 
 const onClick = ({ close }) => {
   return (
@@ -37,17 +37,17 @@ const onClick = ({ close }) => {
   );
 };
 
-const CardsPage = () => {
+const StatsPage = () => {
   return (
     <div>
       <Header
-        title="Cards"
-        color={memoryTypes.cards.color}
-        image={Cards}
+        title="Stats"
+        color={memoryTypes.stats.color}
+        image=""
         onClick={onClick}
       />
     </div>
   );
 };
 
-export default CardsPage;
+export default StatsPage;

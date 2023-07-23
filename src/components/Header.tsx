@@ -10,6 +10,7 @@ import 'reactjs-popup/dist/index.css';
 import { mainTheme } from '../config/theme';
 
 import Button from '../components/Button';
+import Sidebar from '../components/Sidebar/Sidebar';
 
 type HeaderProps = {
   title: string;
@@ -20,18 +21,23 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ title, color, image, onClick }) => {
   return (
-    <header style={{
-      display: 'flex',
-      alignItems: 'center',
-      backgroundColor: mainTheme.headerColor,
-      padding: '10px',
-    }}>
-      <div style={{ flex: 1 }}>
+    <header
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: mainTheme.header.background,
+        padding: '10px',
+      }}
+    >
+      <div style={{ flex: 1, display: 'flex', verticalAlign: 'middle' }}>
+        <Sidebar />
+
         <Typography
           gutterBottom
           variant="h5"
           component="div"
           sx={{ color: color }}
+          style={{ paddingTop: '0.5em' }}
         >
           {title}
         </Typography>

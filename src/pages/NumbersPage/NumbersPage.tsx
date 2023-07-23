@@ -18,7 +18,10 @@ const onClick = ({ close }) => {
           onClick={() => {
             close();
           }}
-          style={{ backgroundColor: mainTheme.button.ok.background, color: mainTheme.button.ok.color }}
+          style={{
+            backgroundColor: mainTheme.button.ok.background,
+            color: mainTheme.button.ok.color,
+          }}
         />
         <span style={{ paddingRight: '10px' }}></span>
         <Button
@@ -26,7 +29,10 @@ const onClick = ({ close }) => {
           onClick={() => {
             close();
           }}
-          style={{ backgroundColor: mainTheme.button.cancel.background, color: mainTheme.button.cancel.color }}
+          style={{
+            backgroundColor: mainTheme.button.cancel.background,
+            color: mainTheme.button.cancel.color,
+          }}
         />
       </div>
     </div>
@@ -44,7 +50,12 @@ const Status = () => {};
 const NumbersPage = () => {
   return (
     <div>
-      <Header title="Numbers" color={memoryTypes.numbers.color} image={Numbers} onClick={onClick} />
+      <Header
+        title="Numbers"
+        color={memoryTypes.numbers.color}
+        image={Numbers}
+        onClick={onClick}
+      />
       <Home />
     </div>
   );

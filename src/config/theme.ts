@@ -10,7 +10,10 @@ const mainTheme = {
   successColor: '#27ae60',
   disabledColor: '#bdc3c7',
   cardTextBackgroundColor: '#ffffff',
-  headerColor: '#F0F0F0',
+  header: {
+    background: '#F0F0F0',
+    color: '#5A5A5A',
+  },
   button: {
     ok: {
       background: '#2185D0',
@@ -25,9 +28,20 @@ const mainTheme = {
       color: '#5A5A5A',
     },
   },
+  sidebar: {
+    header: {
+      background: '#F0F0F0',
+      color: '#5A5A5A',
+    },
+    width: '350px',
+  },
 };
 
 const memoryTypes = {
+  stats: {
+    background: '#F1E1F7',
+    color: '#A336D1',
+  },
   cards: {
     background: '#F3D3D3',
     color: '#DE3228',

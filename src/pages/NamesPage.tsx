@@ -16,7 +16,10 @@ const onClick = ({ close }) => {
           onClick={() => {
             close();
           }}
-          style={{ backgroundColor: mainTheme.button.ok.background, color: mainTheme.button.ok.color }}
+          style={{
+            backgroundColor: mainTheme.button.ok.background,
+            color: mainTheme.button.ok.color,
+          }}
         />
         <span style={{ paddingRight: '10px' }}></span>
         <Button
@@ -24,7 +27,10 @@ const onClick = ({ close }) => {
           onClick={() => {
             close();
           }}
-          style={{ backgroundColor: mainTheme.button.cancel.background, color: mainTheme.button.cancel.color }}
+          style={{
+            backgroundColor: mainTheme.button.cancel.background,
+            color: mainTheme.button.cancel.color,
+          }}
         />
       </div>
     </div>
@@ -34,7 +40,12 @@ const onClick = ({ close }) => {
 const NamesPage = () => {
   return (
     <div>
-      <Header title="Names" color={memoryTypes.names.color} image={Names} onClick={onClick} />
+      <Header
+        title="Names"
+        color={memoryTypes.names.color}
+        image={Names}
+        onClick={onClick}
+      />
     </div>
   );
 };

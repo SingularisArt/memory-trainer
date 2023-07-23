@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import HomePage from '../pages/HomePage';
+import StatsPage from '../pages/StatsPage';
 import CardsPage from '../pages/CardsPage';
 import ImagesPage from '../pages/ImagesPage';
 import InternationalNamesPage from '../pages/InternationalNamesPage';
@@ -15,6 +16,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/stats" element={<StatsPage />} />
         <Route path="/cards" element={<CardsPage />} />
         <Route path="/images" element={<ImagesPage />} />
         <Route
