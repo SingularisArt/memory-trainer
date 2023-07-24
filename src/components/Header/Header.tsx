@@ -16,22 +16,6 @@ type HeaderProps = {
   link?: string;
 };
 
-type StatsButtonProps = {
-  link: string;
-};
-
-const StatsButton: React.FC<StatsButtonProps> = ({ link }) => {
-  return (
-    <Link to={link}>
-      <Button
-        icon={<ImStatsBars />}
-        text='Stats'
-        className='stats-button'
-      />
-    </Link>
-  );
-};
-
 const Header: React.FC<HeaderProps> = ({ title, color, image, link }) => {
   return (
     <header className='header'>
@@ -57,7 +41,15 @@ const Header: React.FC<HeaderProps> = ({ title, color, image, link }) => {
       </div>
 
       <div className='div-stats-button'>
-        {link ? StatsButton({ link: link }) : <div></div>}
+        {link ? (
+          <Link to={link}>
+            <Button
+              icon={<ImStatsBars />}
+              className='stats-button'
+              text='Stats'
+            />
+          </Link>
+        ) : <div></div>}
       </div>
     </header>
   );

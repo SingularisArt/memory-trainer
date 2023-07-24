@@ -7,6 +7,11 @@
   height: 25px;
 }
 
+.card-spacing {
+  width: 108px;
+  height: 31px;
+}
+
 .note {
   color: var(--note-color);
 }

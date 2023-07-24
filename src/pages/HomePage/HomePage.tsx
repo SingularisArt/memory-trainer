@@ -23,7 +23,7 @@ const HomePage: React.FC<HomePageProps> = () => {
   return (
     <div style={{ padding: '15px' }}>
       <Box>
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid container rowSpacing={1.5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} sm={6} md={4}>
             <Item>
               <Link to='/cards'>

@@ -6,11 +6,11 @@ import TimerHeader from "../../components/TimerHeader/TimerHeader";
 
 import { memoryTypes } from "../../config/theme";
 
-type PreparationProps = {
+type RecallProps = {
   onClick: () => void;
 };
 
-const Preparation: React.FC<PreparationProps> = ({ onClick }) => {
+const Recall: React.FC<RecallProps> = ({ onClick }) => {
   const { cardsData } = CardsData();
 
   return (
@@ -18,12 +18,12 @@ const Preparation: React.FC<PreparationProps> = ({ onClick }) => {
       <TimerHeader
         color={memoryTypes.cards.color}
         title="Cards"
-        time={cardsData.preparationTime}
+        time={cardsData.maxRecallTime}
         finish={onClick}
-        text="Memorization starts in"
+        text="Recall ends in"
       />
     </div>
   );
 };
 
-export default Preparation;
+export default Recall;

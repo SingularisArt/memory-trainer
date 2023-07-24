@@ -7,6 +7,8 @@ type ButtonProps = {
   onClick?: () => void;
   style?: React.CSSProperties;
   className?: string;
+  variation?: string;
+  color?: string;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -15,9 +17,12 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   style,
   className,
+  color,
 }) => {
   return (
     <MuiButton
+      variant='contained'
+      color={color}
       className={className}
       startIcon={icon}
       style={style}

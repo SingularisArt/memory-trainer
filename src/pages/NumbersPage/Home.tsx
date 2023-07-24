@@ -2,11 +2,9 @@ import Button from '../../components/Button';
 
 import { mainTheme } from '../../config/theme';
 
-type HomeProps = {
-  onClick: () => void;
-};
+type HomeProps = {};
 
-const Home: HomeProps = (onClick) => {
+const Home: HomeProps = () => {
   return (
     <div style={{ margin: '1rem' }}>
       <table className='config'>
@@ -18,10 +16,11 @@ const Home: HomeProps = (onClick) => {
                 type='number'
                 name='digits-to-memorize'
                 min='1'
-                style={{ width: '100px', height: '25px' }}
+                placeholder='100'
+                className='input-config'
               />
             </td>
-            <td style={{ color: mainTheme.note }}></td>
+            <td className='note'></td>
           </tr>
           <tr>
             <td>Groups:</td>
@@ -31,11 +30,12 @@ const Home: HomeProps = (onClick) => {
                 name='groups'
                 min='1'
                 max='10'
-                style={{ width: '100px', height: '25px' }}
+                placeholder='3'
+                className='input-config'
               />
             </td>
-            <td style={{ color: mainTheme.note }}>
-              Specify the digit groupings
+            <td className='note'>
+              Specify the digit groupings (1-10).
             </td>
           </tr>
           <tr>
@@ -45,11 +45,12 @@ const Home: HomeProps = (onClick) => {
                 type='number'
                 name='maximum-memorization-time'
                 min='1'
-                style={{ width: '100px', height: '25px' }}
+                placeholder='60'
+                className='input-config'
               />
             </td>
-            <td style={{ color: mainTheme.note }}>
-              seconds
+            <td className='note'>
+              Seconds.
             </td>
           </tr>
           <tr>
@@ -59,11 +60,12 @@ const Home: HomeProps = (onClick) => {
                 type='number'
                 name='maximum-recall-time'
                 min='1'
-                style={{ width: '100px', height: '25px' }}
+                placeholder='120'
+                className='input-config'
               />
             </td>
-            <td style={{ color: mainTheme.note }}>
-              seconds
+            <td className='note'>
+              Seconds.
             </td>
           </tr>
           <tr>
@@ -73,11 +75,12 @@ const Home: HomeProps = (onClick) => {
                 type='number'
                 name='preparation-maximum-time'
                 min='1'
-                style={{ width: '100px', height: '25px' }}
+                placeholder='20'
+                className='input-config'
               />
             </td>
-            <td style={{ color: mainTheme.note }}>
-              seconds
+            <td className='note'>
+              Seconds.
             </td>
           </tr>
           <tr>
@@ -85,7 +88,7 @@ const Home: HomeProps = (onClick) => {
             <td>
               <input type='checkbox' name='hide-timer' />
             </td>
-            <td style={{ color: mainTheme.note }}>
+            <td className='note'>
               Select to hide the timer during memorization.
             </td>
           </tr>
@@ -95,13 +98,7 @@ const Home: HomeProps = (onClick) => {
       <div style={{ paddingTop: '1em' }}>
         <Button
           text='Start'
-          style={{
-            padding: '.78571429em 1.5em .78571429em',
-            borderRadius: '.28571429rem',
-            backgroundColor: mainTheme.button.ok.background,
-            color: mainTheme.button.ok.color,
-          }}
-          onClick={onClick}
+          className='start-btn'
         />
       </div>
     </div>

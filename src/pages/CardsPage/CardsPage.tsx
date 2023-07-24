@@ -1,35 +1,57 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import Header from '../../components/Header/Header';
+import RecallBreak from "./RecallBreak";
+import Recall from "./Recall";
+import Home from "./Home";
+import Preparation from "./Preparation";
+import Memorize from "./Memorize";
+import Status from "./Status";
 
-import Fill from './Fill';
-import Home from './Home';
-import Preparation from './Preparation';
-import Slider from './Slider';
-import Status from './Status';
-
-import { memoryTypes } from '../../config/theme';
-
-import Cards from '../../images/headers/cards.png';
-import './CardsPage.css';
+import "./CardsPage.css";
 
 type CardsPageProps = {};
-type onClickStartProps = {};
-
-const onClickStart: onClickStartProps = () => {};
 
 const CardsPage: React.FC<CardsPageProps> = () => {
+  const [showHome, setShowHome] = useState(true);
+  const [showPreparation, setShowPreparation] = useState(false);
+  const [showMemorize, setShowMemorize] = useState(false);
+  const [showRecallBreak, setShowRecallBreak] = useState(false);
+  const [showRecall, setShowRecall] = useState(false);
+  const [showStatus, setShowStatus] = useState(false);
+
+  const onClickHome = () => {
+    setShowStatus(false);
+    setShowHome(true);
+  };
+  const onClickPreparation = () => {
+    setShowHome(false);
+    setShowPreparation(true);
+  };
+  const onClickMemorize = () => {
+    setShowPreparation(false);
+    setShowMemorize(true);
+  };
+  const onClickRecallBreak = () => {
+    setShowMemorize(false);
+    setShowRecallBreak(true);
+  };
+  const onClickRecall = () => {
+    setShowRecallBreak(false);
+    setShowRecall(true);
+  };
+  const onClickStatus = () => {
+    setShowRecall(false);
+    setShowStatus(true);
+  };
+
   return (
     <div>
-      <Header
-        title='Cards'
-        color={memoryTypes.cards.color}
-        image={Cards}
-        link='/cards/stats'
-      />
-      <div style={{ padding: '10px' }}>
-        <Home onClick={onClickStart} />
-      </div>
+      {showHome ? <Home onClick={onClickPreparation} /> : null}
+      {showPreparation ? <Preparation onClick={onClickMemorize} /> : null}
+      {showMemorize ? <Memorize onClick={onClickRecallBreak} /> : null}
+      {showRecallBreak ? <RecallBreak onClick={onClickRecall} /> : null}
+      {showRecall ? <Recall onClick={onClickStatus} /> : null}
+      {showStatus ? <Status onClick={onClickHome} /> : null}
     </div>
   );
 };

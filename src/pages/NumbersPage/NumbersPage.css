@@ -5,3 +5,19 @@
 .config td {
   padding-right: 10px;
 }
+
+.input-config {
+  width: 100px;
+  height: 25px;
+}
+
+.note {
+  color: var(--note-color);
+}
+
+.start-btn {
+  padding: .78571429em 1.5em .78571429em;
+  border-radius: .28571429rem;
+  background-color: var(--button-ok-background-color);
+  color: var(--button-ok-text-color);
+}
