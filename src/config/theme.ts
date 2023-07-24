@@ -39,8 +39,8 @@ const mainTheme = {
 
 const memoryTypes = {
   stats: {
-    background: '#F1E1F7',
-    color: '#A336D1',
+    background: '#F5F5F5',
+    color: '#555555',
   },
   cards: {
     background: '#F3D3D3',

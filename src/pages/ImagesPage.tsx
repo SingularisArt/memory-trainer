@@ -7,12 +7,12 @@ import Images from '../images/headers/images.png';
 
 const onClick = ({ close }) => {
   return (
-    <div className="modal">
-      <div className="header">Images Preferences</div>
-      <div className="content">hi</div>
-      <div className="actions">
+    <div className='modal'>
+      <div className='header'>Images Preferences</div>
+      <div className='content'>hi</div>
+      <div className='actions'>
         <Button
-          text="Ok"
+          text='Ok'
           onClick={() => {
             close();
           }}
@@ -23,7 +23,7 @@ const onClick = ({ close }) => {
         />
         <span style={{ paddingRight: '10px' }}></span>
         <Button
-          text="Cancel"
+          text='Cancel'
           onClick={() => {
             close();
           }}
@@ -41,7 +41,7 @@ const ImagesPage = () => {
   return (
     <div>
       <Header
-        title="Images"
+        title='Images'
         color={memoryTypes.images.color}
         image={Images}
         onClick={onClick}

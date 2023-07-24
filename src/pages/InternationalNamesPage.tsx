@@ -7,12 +7,12 @@ import InternationalNames from '../images/headers/international_names.png';
 
 const onClick = ({ close }) => {
   return (
-    <div className="modal">
-      <div className="header">International Names Preferences</div>
-      <div className="content">hi</div>
-      <div className="actions">
+    <div className='modal'>
+      <div className='header'>International Names Preferences</div>
+      <div className='content'>hi</div>
+      <div className='actions'>
         <Button
-          text="Ok"
+          text='Ok'
           onClick={() => {
             close();
           }}
@@ -23,7 +23,7 @@ const onClick = ({ close }) => {
         />
         <span style={{ paddingRight: '10px' }}></span>
         <Button
-          text="Cancel"
+          text='Cancel'
           onClick={() => {
             close();
           }}
@@ -41,7 +41,7 @@ const InternationalNamesPage = () => {
   return (
     <div>
       <Header
-        title="International Names"
+        title='International Names'
         color={memoryTypes.internationalNames.color}
         image={InternationalNames}
         onClick={onClick}

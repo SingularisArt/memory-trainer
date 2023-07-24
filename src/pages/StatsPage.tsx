@@ -7,12 +7,12 @@ import Button from '../components/Button';
 
 const onClick = ({ close }) => {
   return (
-    <div className="modal">
-      <div className="header">Cards Preferences</div>
-      <div className="content">hi</div>
-      <div className="actions">
+    <div className='modal'>
+      <div className='header'>Cards Preferences</div>
+      <div className='content'>hi</div>
+      <div className='actions'>
         <Button
-          text="Ok"
+          text='Ok'
           onClick={() => {
             close();
           }}
@@ -23,7 +23,7 @@ const onClick = ({ close }) => {
         />
         <span style={{ paddingRight: '10px' }}></span>
         <Button
-          text="Cancel"
+          text='Cancel'
           onClick={() => {
             close();
           }}
@@ -41,9 +41,9 @@ const StatsPage = () => {
   return (
     <div>
       <Header
-        title="Stats"
+        title='Stats'
         color={memoryTypes.stats.color}
-        image=""
+        image=''
         onClick={onClick}
       />
     </div>

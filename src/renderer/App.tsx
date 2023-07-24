@@ -15,17 +15,17 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/stats" element={<StatsPage />} />
-        <Route path="/cards" element={<CardsPage />} />
-        <Route path="/images" element={<ImagesPage />} />
+        <Route path='/' element={<HomePage />} />
+        <Route path='/stats' element={<StatsPage />} />
+        <Route path='/cards' element={<CardsPage />} />
+        <Route path='/images' element={<ImagesPage />} />
         <Route
-          path="/international-names"
+          path='/international-names'
           element={<InternationalNamesPage />}
         />
-        <Route path="/names" element={<NamesPage />} />
-        <Route path="/numbers" element={<NumbersPage />} />
-        <Route path="/words" element={<WordsPage />} />
+        <Route path='/names' element={<NamesPage />} />
+        <Route path='/numbers' element={<NumbersPage />} />
+        <Route path='/words' element={<WordsPage />} />
       </Routes>
     </Router>
   );

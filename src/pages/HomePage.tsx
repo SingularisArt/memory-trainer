@@ -22,11 +22,11 @@ const HomePage = () => {
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} sm={6} md={4}>
             <Item>
-              <Link to="/cards">
+              <Link to='/cards'>
                 <Card
                   image={Cards}
-                  title="Cards"
-                  description="Memorize playing cards."
+                  title='Cards'
+                  description='Memorize playing cards.'
                   bg={memoryTypes.cards.background}
                   color={memoryTypes.cards.color}
                 />
@@ -35,12 +35,12 @@ const HomePage = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Item>
-              <Link to="/images">
+              <Link to='/images'>
                 <Card
                   image={Images}
-                  width="70%"
-                  title="Images"
-                  description="Memorize random images."
+                  width='70%'
+                  title='Images'
+                  description='Memorize random images.'
                   bg={memoryTypes.images.background}
                   color={memoryTypes.images.color}
                 />
@@ -49,12 +49,12 @@ const HomePage = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Item>
-              <Link to="/international-names">
+              <Link to='/international-names'>
                 <Card
                   image={InternationalNames}
-                  width="60%"
-                  title="International Names"
-                  description="Memorize international names."
+                  width='60%'
+                  title='International Names'
+                  description='Memorize international names.'
                   color={memoryTypes.internationalNames.color}
                   bg={memoryTypes.internationalNames.background}
                 />
@@ -63,12 +63,12 @@ const HomePage = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Item>
-              <Link to="/names">
+              <Link to='/names'>
                 <Card
                   image={Names}
-                  width="60%"
-                  title="Names"
-                  description="Memorize people's names."
+                  width='60%'
+                  title='Names'
+                  description='Memorize people names.'
                   color={memoryTypes.names.color}
                   bg={memoryTypes.names.background}
                 />
@@ -77,12 +77,12 @@ const HomePage = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Item>
-              <Link to="/numbers">
+              <Link to='/numbers'>
                 <Card
                   image={Numbers}
-                  width="70%"
-                  title="Numbers"
-                  description="Memorize random numbers."
+                  width='70%'
+                  title='Numbers'
+                  description='Memorize random numbers.'
                   color={memoryTypes.numbers.color}
                   bg={memoryTypes.numbers.background}
                 />
@@ -91,11 +91,11 @@ const HomePage = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             <Item>
-              <Link to="/words">
+              <Link to='/words'>
                 <Card
                   image={Words}
-                  title="Words"
-                  description="Memorize random words."
+                  title='Words'
+                  description='Memorize random words.'
                   color={memoryTypes.words.color}
                   bg={memoryTypes.words.background}
                 />

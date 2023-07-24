@@ -34,8 +34,8 @@ const Header: React.FC<HeaderProps> = ({ title, color, image, onClick }) => {
 
         <Typography
           gutterBottom
-          variant="h5"
-          component="div"
+          variant='h5'
+          component='div'
           sx={{ color: color }}
           style={{ paddingTop: '0.5em' }}
         >
@@ -44,8 +44,8 @@ const Header: React.FC<HeaderProps> = ({ title, color, image, onClick }) => {
       </div>
 
       <div style={{ flex: 1 }}>
-        <Link to="/">
-          <img src={image} height="80px" alt="logo" />
+        <Link to='/'>
+          <img src={image} height='80px' alt='logo' />
         </Link>
       </div>
 
@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ title, color, image, onClick }) => {
           trigger={
             <Button
               icon={<PiGearSixFill />}
-              text="Preferences"
+              text='Preferences'
               onClick={() => {}}
               style={{
                 paddingTop: '1em',

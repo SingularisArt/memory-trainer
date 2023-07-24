@@ -56,13 +56,13 @@ const Card: React.FC<CardProps> = ({
       <CardContent style={{ backgroundColor: 'white' }}>
         <Typography
           gutterBottom
-          variant="h5"
-          component="div"
+          variant='h5'
+          component='div'
           sx={{ color: color }}
         >
           {title}
         </Typography>
-        <Typography variant="body2">{description}</Typography>
+        <Typography variant='body2'>{description}</Typography>
       </CardContent>
     </MuiCard>
   );
