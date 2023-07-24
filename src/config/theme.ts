@@ -5,11 +5,12 @@ const mainTheme = {
   secondaryColor: '#2ecc71',
   textColor: '#333333',
   accentColor: '#ff9f40',
+  inputBorderColor: '#92bfdd',
   errorColor: '#e74c3c',
   warningColor: '#f39c12',
   successColor: '#27ae60',
   disabledColor: '#bdc3c7',
-  cardTextBackgroundColor: '#ffffff',
+  noteColor: '#959595',
   header: {
     background: '#F0F0F0',
     color: '#5A5A5A',
@@ -23,17 +24,22 @@ const mainTheme = {
       background: '#E0E1E2',
       color: '#929393',
     },
-    preferences: {
+    stats: {
       background: '#E0E1E2',
       color: '#5A5A5A',
     },
   },
   sidebar: {
+    background: '#fff',
+    links: {
+      background: '#e5e8ec',
+      color: '#475f7b',
+    },
+    width: '350px',
     header: {
       background: '#F0F0F0',
       color: '#5A5A5A',
     },
-    width: '350px',
   },
 };
 

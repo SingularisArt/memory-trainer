@@ -2,31 +2,30 @@ import React from 'react';
 
 import Header from '../../components/Header/Header';
 
-import Numbers from '../../images/headers/numbers.png';
-
+import Fill from './Fill';
 import Home from './Home';
 import Preparation from './Preparation';
 import Slider from './Slider';
-import Fill from './Fill';
 import Status from './Status';
 
 import { memoryTypes } from '../../config/theme';
 
-import './NumbersPage.css';
+import Cards from '../../images/headers/cards.png';
+import './CardsPage.css';
 
-type NumbersPageProps = {};
+type CardsPageProps = {};
 type onClickStartProps = {};
 
 const onClickStart: onClickStartProps = () => {};
 
-const NumbersPage: React.FC<NumbersPageProps> = () => {
+const CardsPage: React.FC<CardsPageProps> = () => {
   return (
     <div>
       <Header
-        title='Numbers'
-        color={memoryTypes.numbers.color}
-        image={Numbers}
-        link='/numbers/stats'
+        title='Cards'
+        color={memoryTypes.cards.color}
+        image={Cards}
+        link='/cards/stats'
       />
       <div style={{ padding: '10px' }}>
         <Home onClick={onClickStart} />
@@ -35,4 +34,4 @@ const NumbersPage: React.FC<NumbersPageProps> = () => {
   );
 };
 
-export default NumbersPage;
+export default CardsPage;

@@ -65,9 +65,6 @@ const Sidebar = () => {
                 <Link to='/' className='sd-link'>Home</Link>
               </li>
               <li>
-                <Link to='/stats' className='sd-link'>Stats</Link>
-              </li>
-              <li>
                 <Link to='/cards' className='sd-link'>Cards</Link>
               </li>
               <li>

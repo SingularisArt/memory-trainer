@@ -1,21 +1,25 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
-import Card from '../components/Card';
-import Item from '../components/Item';
+import Card from '../../components/Card';
+import Item from '../../components/Item';
 
-import { memoryTypes } from '../config/theme';
+import { memoryTypes } from '../../config/theme';
 
-import Cards from '../images/dashboard_cards/cards.png';
-import Images from '../images/dashboard_cards/images.png';
-import InternationalNames from '../images/dashboard_cards/international_names.png';
-import Names from '../images/dashboard_cards/names.png';
-import Numbers from '../images/dashboard_cards/numbers.png';
-import Words from '../images/dashboard_cards/words.png';
+import Cards from '../../images/dashboard_cards/cards.png';
+import Images from '../../images/dashboard_cards/images.png';
+import InternationalNames from '../../images/dashboard_cards/international_names.png';
+import Names from '../../images/dashboard_cards/names.png';
+import Numbers from '../../images/dashboard_cards/numbers.png';
+import Words from '../../images/dashboard_cards/words.png';
+import './HomePage.css';
 
-const HomePage = () => {
+type HomePageProps = {};
+
+const HomePage: React.FC<HomePageProps> = () => {
   return (
     <div style={{ padding: '15px' }}>
       <Box>

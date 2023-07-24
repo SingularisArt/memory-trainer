@@ -1,8 +1,7 @@
-/* Sidebar */
 .sidebar {
   min-height: 100vh;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.16);
-  background-color: #fff;
+  background-color: var(--sidebar-background-color);
   position: fixed;
   top: 0;
   left: -100%;
@@ -41,18 +40,13 @@
   display: inline-block;
   width: 90%;
   padding: 10px 16px;
-  color: #475f7b;
-  background-color: #e5e8ec;
+  background-color: var(--sidebar-links-background-color);
+  color: var(--sidebar-links-text-color);
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
 }
 
-.sd-link:hover {
-  background-color: #f1f1f1;
-}
-
-/* Sidebar Overlay */
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -70,7 +64,6 @@
   visibility: visible;
 }
 
-/* Button Styles */
 .sidebar-btn {
   display: inline-flex;
   align-items: center;
@@ -82,7 +75,6 @@
   cursor: pointer;
 }
 
-/* Additional Styles */
 .container-fluid {
   margin-top: 1rem;
 }

@@ -3,16 +3,22 @@ import { Button as MuiButton } from '@mui/material';
 
 type ButtonProps = {
   icon?: React.ReactNode;
-  variation?: 'primary' | 'secondary' | 'outlined';
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   style?: React.CSSProperties;
+  className?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ icon, variation = 'primary', text, onClick, style }) => {
+const Button: React.FC<ButtonProps> = ({
+  icon,
+  text,
+  onClick,
+  style,
+  className,
+}) => {
   return (
     <MuiButton
-      variant={variation}
+      className={className}
       startIcon={icon}
       style={style}
       onClick={onClick}
