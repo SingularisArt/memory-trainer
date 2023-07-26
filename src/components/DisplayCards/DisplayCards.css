@@ -1,0 +1,10 @@
+.main-cards {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-container {
+  display: flex;
+  justify-content: space;
+}
