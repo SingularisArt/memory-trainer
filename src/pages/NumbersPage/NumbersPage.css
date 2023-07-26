@@ -2,17 +2,22 @@
   line-height: 40px;
 }
 
-.config td {
+.left {
   padding-right: 10px;
 }
 
-.input-config {
+.config-input {
   width: 100px;
   height: 25px;
 }
 
 .note {
+  padding-left: 10px;
   color: var(--note-color);
+}
+
+.start-btn-div {
+  padding-top: 1em;
 }
 
 .start-btn {

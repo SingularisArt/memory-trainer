@@ -25,6 +25,6 @@
   padding-bottom: 1em;
   padding-right: 1.5em;
   padding-left: 1.5em;
-  background-color: var(--button-stats-background-color);
-  color: var(--button-stats-text-color);
+  background-color: var(--button-ok-background-color);
+  color: var(--button-ok-text-color);
 }

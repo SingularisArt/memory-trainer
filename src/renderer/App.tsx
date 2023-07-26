@@ -57,14 +57,6 @@ export default function App() {
     "--button-cancel-text-color",
     mainTheme.button.cancel.color
   );
-  root.style.setProperty(
-    "--button-stats-background-color",
-    mainTheme.button.stats.background
-  );
-  root.style.setProperty(
-    "--button-stats-text-color",
-    mainTheme.button.stats.color
-  );
 
   root.style.setProperty(
     "--sidebar-background-color",

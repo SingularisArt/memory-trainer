@@ -1,107 +1,135 @@
-import Button from '../../components/Button';
+import React from "react";
 
-import { mainTheme } from '../../config/theme';
+import { updateNumbersData } from "../../store/actions/numbersActions";
+import { NumbersData } from "../../utils/redux";
 
-type HomeProps = {};
+import Button from "../../components/Button";
+import Header from "../../components/Header/Header";
 
-const Home: HomeProps = () => {
+import { memoryTypes } from "../../config/theme";
+
+import Numbers from "../../images/headers/numbers.png";
+
+type HomeProps = {
+  onClick: () => void;
+};
+
+const Home: React.FC<HomeProps> = ({ onClick }) => {
+  const { numbersData, dispatch } = NumbersData();
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    const integerValue = parseInt(value);
+
+    if (!isNaN(integerValue)) {
+      dispatch(updateNumbersData({ [name]: integerValue }));
+    }
+  };
+
   return (
-    <div style={{ margin: '1rem' }}>
-      <table className='config'>
-        <tbody>
-          <tr>
-            <td>Number of Digits to Memorize:</td>
-            <td>
-              <input
-                type='number'
-                name='digits-to-memorize'
-                min='1'
-                placeholder='100'
-                className='input-config'
-              />
-            </td>
-            <td className='note'></td>
-          </tr>
-          <tr>
-            <td>Groups:</td>
-            <td>
-              <input
-                type='number'
-                name='groups'
-                min='1'
-                max='10'
-                placeholder='3'
-                className='input-config'
-              />
-            </td>
-            <td className='note'>
-              Specify the digit groupings (1-10).
-            </td>
-          </tr>
-          <tr>
-            <td>Maximum Memorization Time:</td>
-            <td>
-              <input
-                type='number'
-                name='maximum-memorization-time'
-                min='1'
-                placeholder='60'
-                className='input-config'
-              />
-            </td>
-            <td className='note'>
-              Seconds.
-            </td>
-          </tr>
-          <tr>
-            <td>Maximum Recall Time:</td>
-            <td>
-              <input
-                type='number'
-                name='maximum-recall-time'
-                min='1'
-                placeholder='120'
-                className='input-config'
-              />
-            </td>
-            <td className='note'>
-              Seconds.
-            </td>
-          </tr>
-          <tr>
-            <td>Preparation Time:</td>
-            <td>
-              <input
-                type='number'
-                name='preparation-maximum-time'
-                min='1'
-                placeholder='20'
-                className='input-config'
-              />
-            </td>
-            <td className='note'>
-              Seconds.
-            </td>
-          </tr>
-          <tr>
-            <td>Hide Timer:</td>
-            <td>
-              <input type='checkbox' name='hide-timer' />
-            </td>
-            <td className='note'>
-              Select to hide the timer during memorization.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <>
+      <Header
+        title="Numbers"
+        color={memoryTypes.numbers.color}
+        image={Numbers}
+        link="/numbers/stats"
+      />
+      <div className="config-table">
+        <table className="config">
+          <tbody>
+            <tr>
+              <td className="left">Number of Digits to Memorize:</td>
+              <td>
+                <input
+                  className="config-input"
+                  type="number"
+                  min="1"
+                  name="numberOfNumbers"
+                  value={numbersData.numberOfNumbers}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td className="note"></td>
+            </tr>
+            <tr>
+              <td className="left">Groups:</td>
+              <td>
+                <input
+                  className="config-input"
+                  type="number"
+                  min="1"
+                  max="9"
+                  name="groups"
+                  value={numbersData.groups}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td className="note">Specify the digit groupings (1-10).</td>
+            </tr>
+            <tr>
+              <td className="left">Maximum Memorization Time:</td>
+              <td>
+                <input
+                  className="config-input"
+                  type="number"
+                  min="1"
+                  name="maxMemorizationTime"
+                  value={numbersData.maxMemorizationTime}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td className="note">Seconds.</td>
+            </tr>
+            <tr>
+              <td className="left">Maximum Recall Time:</td>
+              <td>
+                <input
+                  className="config-input"
+                  type="number"
+                  min="1"
+                  name="maxRecallTime"
+                  value={numbersData.maxRecallTime}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td className="note">Seconds.</td>
+            </tr>
+            <tr>
+              <td className="left">Preparation Time:</td>
+              <td>
+                <input
+                  className="config-input"
+                  type="number"
+                  min="1"
+                  name="preparationTime"
+                  value={numbersData.preparationTime}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td className="note">Seconds.</td>
+            </tr>
+            <tr>
+              <td className="left">Preparation Before Recall Time:</td>
+              <td>
+                <input
+                  className="config-input"
+                  type="number"
+                  min="1"
+                  name="preparationBeforeRecallTime"
+                  value={numbersData.preparationBeforeRecallTime}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td className="note">Seconds.</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <div style={{ paddingTop: '1em' }}>
-        <Button
-          text='Start'
-          className='start-btn'
-        />
+        <div className="start-btn-div">
+          <Button text="Start" className="start-btn" onClick={onClick} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

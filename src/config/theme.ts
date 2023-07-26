@@ -1,6 +1,6 @@
 const mainTheme = {
   background: '#f1f1f1',
-  foreground: '#ffffff',
+  foreground: '#FFFFFF',
   primaryColor: '#3498db',
   secondaryColor: '#2ecc71',
   textColor: '#333333',
@@ -18,19 +18,15 @@ const mainTheme = {
   button: {
     ok: {
       background: '#2185D0',
-      color: '#fff',
+      color: '#FFF',
     },
     cancel: {
       background: '#E0E1E2',
       color: '#929393',
     },
-    stats: {
-      background: '#E0E1E2',
-      color: '#5A5A5A',
-    },
   },
   sidebar: {
-    background: '#fff',
+    background: '#FFF',
     links: {
       background: '#e5e8ec',
       color: '#475f7b',

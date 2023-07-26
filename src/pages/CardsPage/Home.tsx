@@ -1,5 +1,7 @@
 import React from "react";
 
+import createCache from '@emotion/cache';
+
 import { updateCardsData } from "../../store/actions/cardsActions";
 import { CardsData } from "../../utils/redux";
 
@@ -16,6 +18,7 @@ type HomeProps = {
 
 const Home: React.FC<HomeProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     const integerValue = parseInt(value);
@@ -30,11 +33,6 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
     dispatch(updateCardsData({ [name]: value }));
   };
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target;
-    dispatch(updateCardsData({ [name]: checked }));
-  };
-
   return (
     <>
       <Header
@@ -47,7 +45,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
         <table className="config">
           <tbody>
             <tr>
-              <td>Number of Cards to Memorize:</td>
+              <td className="left">Number of Cards to Memorize:</td>
               <td>
                 <input
                   className="config-input"
@@ -61,7 +59,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
               <td className="note"></td>
             </tr>
             <tr>
-              <td>Groups:</td>
+              <td className="left">Groups:</td>
               <td>
                 <input
                   className="config-input"
@@ -76,7 +74,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
               <td className="note">Specify the card groupings (1-10).</td>
             </tr>
             <tr>
-              <td>Card Spacing:</td>
+              <td className="left">Card Spacing:</td>
               <td>
                 <select
                   className="card-spacing"
@@ -91,7 +89,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
               <td className="note">Select the distance between cards.</td>
             </tr>
             <tr>
-              <td>Maximum Memorization Time:</td>
+              <td className="left">Maximum Memorization Time:</td>
               <td>
                 <input
                   className="config-input"
@@ -105,7 +103,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
               <td className="note">Seconds.</td>
             </tr>
             <tr>
-              <td>Maximum Recall Time:</td>
+              <td className="left">Maximum Recall Time:</td>
               <td>
                 <input
                   className="config-input"
@@ -119,7 +117,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
               <td className="note">Seconds.</td>
             </tr>
             <tr>
-              <td>Preparation Time:</td>
+              <td className="left">Preparation Time:</td>
               <td>
                 <input
                   className="config-input"
@@ -127,6 +125,20 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
                   min="1"
                   name="preparationTime"
                   value={cardsData.preparationTime}
+                  onChange={handleInputChange}
+                />
+              </td>
+              <td className="note">Seconds.</td>
+            </tr>
+            <tr>
+              <td className="left">Preparation Before Recall Time:</td>
+              <td>
+                <input
+                  className="config-input"
+                  type="number"
+                  min="1"
+                  name="preparationBeforeRecallTime"
+                  value={cardsData.preparationBeforeRecallTime}
                   onChange={handleInputChange}
                 />
               </td>

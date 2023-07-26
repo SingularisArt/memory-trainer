@@ -1,59 +1,46 @@
 import React, { useState } from "react";
 
-import RecallBreak from "./RecallBreak";
-import Recall from "./Recall";
 import Home from "./Home";
-import Preparation from "./Preparation";
 import Memorize from "./Memorize";
+import Preparation from "./Preparation";
+import Recall from "./Recall";
+import RecallBreak from "./RecallBreak";
 import Status from "./Status";
 
 import "./CardsPage.css";
 
 type CardsPageProps = {};
+type PageState =
+  | "Home"
+  | "Preparation"
+  | "Memorize"
+  | "RecallBreak"
+  | "Recall"
+  | "Status";
 
 const CardsPage: React.FC<CardsPageProps> = () => {
-  const [showHome, setShowHome] = useState(true);
-  const [showPreparation, setShowPreparation] = useState(false);
-  const [showMemorize, setShowMemorize] = useState(false);
-  const [showRecallBreak, setShowRecallBreak] = useState(false);
-  const [showRecall, setShowRecall] = useState(false);
-  const [showStatus, setShowStatus] = useState(false);
+  const [currentPage, setCurrentPage] = useState<PageState>("Home");
 
-  const onClickHome = () => {
-    setShowStatus(false);
-    setShowHome(true);
-  };
-  const onClickPreparation = () => {
-    setShowHome(false);
-    setShowPreparation(true);
-  };
-  const onClickMemorize = () => {
-    setShowPreparation(false);
-    setShowMemorize(true);
-  };
-  const onClickRecallBreak = () => {
-    setShowMemorize(false);
-    setShowRecallBreak(true);
-  };
-  const onClickRecall = () => {
-    setShowRecallBreak(false);
-    setShowRecall(true);
-  };
-  const onClickStatus = () => {
-    setShowRecall(false);
-    setShowStatus(true);
+  const renderPage = () => {
+    switch (currentPage) {
+      case "Home":
+        return <Home onClick={() => setCurrentPage("Preparation")} />;
+      case "Preparation":
+        return <Preparation onClick={() => setCurrentPage("Memorize")} />;
+      case "Memorize":
+        return <Memorize onClick={() => setCurrentPage("RecallBreak")} />;
+      case "RecallBreak":
+        return <RecallBreak onClick={() => setCurrentPage("Recall")} />;
+      case "Recall":
+        return <Recall onClick={() => setCurrentPage("Status")} />;
+      case "Status":
+        return <Status onClick={() => setCurrentPage("Home")} />;
+      default:
+        return null;
+    }
   };
 
-  return (
-    <div>
-      {showHome ? <Home onClick={onClickPreparation} /> : null}
-      {showPreparation ? <Preparation onClick={onClickMemorize} /> : null}
-      {showMemorize ? <Memorize onClick={onClickRecallBreak} /> : null}
-      {showRecallBreak ? <RecallBreak onClick={onClickRecall} /> : null}
-      {showRecall ? <Recall onClick={onClickStatus} /> : null}
-      {showStatus ? <Status onClick={onClickHome} /> : null}
-    </div>
-  );
+  return <div>{renderPage()}</div>;
 };
 
 export default CardsPage;

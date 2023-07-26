@@ -6,6 +6,9 @@ type TimerProps = {
   onFinish?: () => void;
   className?: string;
   text?: string;
+  updateFinishedTime?: boolean;
+  dispatch?: any;
+  updateData?: any;
 };
 
 const Timer: React.FC<TimerProps> = ({
@@ -13,6 +16,9 @@ const Timer: React.FC<TimerProps> = ({
   onFinish,
   className,
   text,
+  updateFinishedTime = false,
+  dispatch,
+  updateData,
 }) => {
   if (seconds === undefined) {
     return (
@@ -22,11 +28,15 @@ const Timer: React.FC<TimerProps> = ({
         </Typography>
       </div>
     );
-  };
+  }
 
   const [time, setTime] = useState(seconds);
 
   useEffect(() => {
+    if (updateFinishedTime) {
+      dispatch(updateData({ "finishedMemorizationTime": elapsedTime }));
+    }
+
     const interval = setInterval(() => {
       if (time > 0) {
         setTime((prevTime) => prevTime - 1);
@@ -49,6 +59,7 @@ const Timer: React.FC<TimerProps> = ({
 
   const minutes = Math.floor(time / 60);
   const remainingSeconds = time % 60;
+  const elapsedTime = seconds - time;
 
   return (
     <div className={className}>

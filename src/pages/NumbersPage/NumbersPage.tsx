@@ -1,38 +1,46 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import Header from '../../components/Header/Header';
+import Home from "./Home";
+import Memorize from "./Memorize";
+import Preparation from "./Preparation";
+import Recall from "./Recall";
+import RecallBreak from "./RecallBreak";
+import Status from "./Status";
 
-import Numbers from '../../images/headers/numbers.png';
-
-import Home from './Home';
-import Preparation from './Preparation';
-import Slider from './Slider';
-import Fill from './Fill';
-import Status from './Status';
-
-import { memoryTypes } from '../../config/theme';
-
-import './NumbersPage.css';
+import "./NumbersPage.css";
 
 type NumbersPageProps = {};
-type onClickStartProps = {};
-
-const onClickStart: onClickStartProps = () => {};
+type PageState =
+  | "Home"
+  | "Preparation"
+  | "Memorize"
+  | "RecallBreak"
+  | "Recall"
+  | "Status";
 
 const NumbersPage: React.FC<NumbersPageProps> = () => {
-  return (
-    <div>
-      <Header
-        title='Numbers'
-        color={memoryTypes.numbers.color}
-        image={Numbers}
-        link='/numbers/stats'
-      />
-      <div style={{ padding: '10px' }}>
-        <Home onClick={onClickStart} />
-      </div>
-    </div>
-  );
+  const [currentPage, setCurrentPage] = useState<PageState>("Home");
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case "Home":
+        return <Home onClick={() => setCurrentPage("Preparation")} />;
+      case "Preparation":
+        return <Preparation onClick={() => setCurrentPage("Memorize")} />;
+      case "Memorize":
+        return <Memorize onClick={() => setCurrentPage("RecallBreak")} />;
+      case "RecallBreak":
+        return <RecallBreak onClick={() => setCurrentPage("Recall")} />;
+      case "Recall":
+        return <Recall onClick={() => setCurrentPage("Status")} />;
+      case "Status":
+        return <Status onClick={() => setCurrentPage("Home")} />;
+      default:
+        return null;
+    }
+  };
+
+  return <div>{renderPage()}</div>;
 };
 
 export default NumbersPage;

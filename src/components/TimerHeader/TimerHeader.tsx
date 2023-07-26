@@ -14,6 +14,9 @@ type TimerHeaderProps = {
   finish: () => void;
   text?: string;
   button?: string;
+  updateFinishedTime?: boolean;
+  dispatch?: any;
+  updateData?: any;
 };
 
 const TimerHeader: React.FC<TimerHeaderProps> = ({
@@ -22,7 +25,10 @@ const TimerHeader: React.FC<TimerHeaderProps> = ({
   time,
   finish,
   text,
-  button = "break",
+  button = "skip",
+  updateFinishedTime = false,
+  dispatch,
+  updateData,
 }) => {
   return (
     <header className="header">
@@ -39,17 +45,24 @@ const TimerHeader: React.FC<TimerHeaderProps> = ({
       </div>
 
       <div className="timer" style={{ flex: 1 }}>
-        <Timer seconds={time} onFinish={finish} text={text} />
+        <Timer
+          seconds={time}
+          onFinish={finish}
+          text={text}
+          updateFinishedTime={updateFinishedTime}
+          dispatch={dispatch}
+          updateData={updateData}
+        />
       </div>
 
       <div>
-        {button === "break" ? (
+        {button === "skip" ? (
           <Button text="Skip" onClick={finish} />
-        ) : button === "finish" ? (
+        ) : button === "continue" ? (
           <Button text="Continue" color="success" onClick={finish} />
-        ) : (
+        ) : button === "finished" ? (
           <Button text="Finished" color="success" onClick={finish} />
-        )}
+        ) : null}
       </div>
     </header>
   );

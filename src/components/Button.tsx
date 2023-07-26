@@ -1,5 +1,7 @@
-import React from 'react';
-import { Button as MuiButton } from '@mui/material';
+import React from "react";
+import { Button as MuiButton } from "@mui/material";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
 
 type ButtonProps = {
   icon?: React.ReactNode;
@@ -19,17 +21,24 @@ const Button: React.FC<ButtonProps> = ({
   className,
   color,
 }) => {
+  const cache = createCache({
+    key: "css",
+    prepend: true,
+  });
+
   return (
-    <MuiButton
-      variant='contained'
-      color={color}
-      className={className}
-      startIcon={icon}
-      style={style}
-      onClick={onClick}
-    >
-      {text}
-    </MuiButton>
+    <CacheProvider value={cache}>
+      <MuiButton
+        variant="contained"
+        color={color}
+        className={className}
+        startIcon={icon}
+        style={style}
+        onClick={onClick}
+      >
+        {text}
+      </MuiButton>
+    </CacheProvider>
   );
 };
 

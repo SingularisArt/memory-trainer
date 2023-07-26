@@ -1,5 +1,6 @@
 import React from "react";
 
+import { FormatSeconds } from "../../utils/misc";
 import { CardsData } from "../../utils/redux";
 
 import TimerHeader from "../../components/TimerHeader/TimerHeader";
@@ -12,15 +13,16 @@ type StatusProps = {
 
 const Status: React.FC<StatusProps> = ({ onClick }) => {
   const { cardsData } = CardsData();
+  const seconds = FormatSeconds(cardsData.finishedMemorizationTime)
 
   return (
     <div>
       <TimerHeader
         color={memoryTypes.cards.color}
-        title="Cards"
+        title={`Cards (${seconds})`}
         finish={onClick}
         text="Status"
-        button="finish"
+        button="continue"
       />
     </div>
   );

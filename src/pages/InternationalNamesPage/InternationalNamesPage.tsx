@@ -1,25 +1,46 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import Header from '../../components/Header/Header';
+import Home from "./Home";
+import Memorize from "./Memorize";
+import Preparation from "./Preparation";
+import Recall from "./Recall";
+import RecallBreak from "./RecallBreak";
+import Status from "./Status";
 
-import { memoryTypes } from '../../config/theme';
-
-import InternationalNames from '../../images/headers/international_names.png';
-import './InternationalNamesPage.css';
+import "./InternationalNamesPage.css";
 
 type InternationalNamesPageProps = {};
+type PageState =
+  | "Home"
+  | "Preparation"
+  | "Memorize"
+  | "RecallBreak"
+  | "Recall"
+  | "Status";
 
 const InternationalNamesPage: React.FC<InternationalNamesPageProps> = () => {
-  return (
-    <div>
-      <Header
-        title='International Names'
-        color={memoryTypes.internationalNames.color}
-        image={InternationalNames}
-        link='/international-names/stats'
-      />
-    </div>
-  );
+  const [currentPage, setCurrentPage] = useState<PageState>("Home");
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case "Home":
+        return <Home onClick={() => setCurrentPage("Preparation")} />;
+      case "Preparation":
+        return <Preparation onClick={() => setCurrentPage("Memorize")} />;
+      case "Memorize":
+        return <Memorize onClick={() => setCurrentPage("RecallBreak")} />;
+      case "RecallBreak":
+        return <RecallBreak onClick={() => setCurrentPage("Recall")} />;
+      case "Recall":
+        return <Recall onClick={() => setCurrentPage("Status")} />;
+      case "Status":
+        return <Status onClick={() => setCurrentPage("Home")} />;
+      default:
+        return null;
+    }
+  };
+
+  return <div>{renderPage()}</div>;
 };
 
 export default InternationalNamesPage;

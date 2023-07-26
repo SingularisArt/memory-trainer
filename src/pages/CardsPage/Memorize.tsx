@@ -1,5 +1,6 @@
 import React from "react";
 
+import { updateCardsData } from "../../store/actions/cardsActions";
 import { CardsData } from "../../utils/redux";
 
 import TimerHeader from "../../components/TimerHeader/TimerHeader";
@@ -11,7 +12,7 @@ type MemorizeProps = {
 };
 
 const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
-  const { cardsData } = CardsData();
+  const { cardsData, dispatch } = CardsData();
 
   return (
     <div>
@@ -21,7 +22,10 @@ const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
         time={cardsData.maxMemorizationTime}
         finish={onClick}
         text="Memorization ends in"
-        button="memory"
+        button="finished"
+        updateFinishedTime={true}
+        dispatch={dispatch}
+        updateData={updateCardsData}
       />
     </div>
   );
