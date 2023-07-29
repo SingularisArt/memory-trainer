@@ -1,4 +1,4 @@
-export interface ImagesState {
+export default interface ImagesState {
   numberOfImages: number;
   images: string[];
   groups: number;

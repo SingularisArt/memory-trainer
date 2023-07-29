@@ -1,6 +1,4 @@
-import React from "react";
-
-import createCache from '@emotion/cache';
+import React, { useState } from "react";
 
 import { updateCardsData } from "../../store/actions/cardsActions";
 import { CardsData } from "../../utils/redux";
@@ -18,6 +16,7 @@ type HomeProps = {
 
 const Home: React.FC<HomeProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
+  const [selectedItem, setSelectedItem] = useState(cardsData.item);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -30,6 +29,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
+    setSelectedItem(value);
     dispatch(updateCardsData({ [name]: value }));
   };
 
@@ -45,19 +45,54 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
         <table className="config">
           <tbody>
             <tr>
-              <td className="left">Number of Cards to Memorize:</td>
+              <td className="left">What to Memorize:</td>
               <td>
-                <input
-                  className="config-input"
-                  type="number"
-                  min="1"
-                  name="numberOfCards"
-                  value={cardsData.numberOfCards}
-                  onChange={handleInputChange}
-                />
+                <select
+                  className="item"
+                  name="item"
+                  value={cardsData.item}
+                  onChange={handleSelectChange}
+                >
+                  <option value="Cards">Cards</option>
+                  <option value="Decks">Decks</option>
+                </select>
               </td>
               <td className="note"></td>
             </tr>
+            {selectedItem === "Cards" && (
+              <tr>
+                <td className="left">Number of Cards to Memorize:</td>
+                <td>
+                  <input
+                    className="config-input"
+                    type="number"
+                    min="1"
+                    max="52"
+                    name="numberOfCards"
+                    value={cardsData.numberOfCards}
+                    onChange={handleInputChange}
+                  />
+                </td>
+                <td className="note">Specify the number of cards you want to memorize (1-52).</td>
+              </tr>
+            )}
+            {selectedItem === "Decks" && (
+              <tr>
+                <td className="left">Number of Decks to Memorize:</td>
+                <td>
+                  <input
+                    className="config-input"
+                    type="number"
+                    min="1"
+                    max="20"
+                    name="numberOfDecks"
+                    value={cardsData.numberOfDecks}
+                    onChange={handleInputChange}
+                  />
+                </td>
+                <td className="note">Specify the number of decks you want to memorize.</td>
+              </tr>
+            )}
             <tr>
               <td className="left">Groups:</td>
               <td>
@@ -65,7 +100,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
                   className="config-input"
                   type="number"
                   min="1"
-                  max="9"
+                  max="10"
                   name="groups"
                   value={cardsData.groups}
                   onChange={handleInputChange}

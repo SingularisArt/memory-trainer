@@ -1,6 +1,10 @@
-export interface CardsState {
+export default interface CardsState {
+  item: string;
+  numberOfDecks: number;
   numberOfCards: number;
-  cards: string[];
+  decks: {
+    [deckId: number]: string[];
+  };
   groups: number;
   cardSpacing: string;
   maxMemorizationTime: number;

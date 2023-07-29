@@ -1,4 +1,4 @@
-import { WordsState } from "../types/WordsType";
+import WordsState from "../types/WordsType";
 
 export const initialState: WordsState = {
   numberOfWords: 100,

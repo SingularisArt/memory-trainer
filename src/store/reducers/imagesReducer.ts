@@ -1,4 +1,4 @@
-import { ImagesState } from "../types/ImagesType";
+import ImagesState from "../types/ImagesType";
 
 export const initialState: ImagesState = {
   numberOfImages: 30,

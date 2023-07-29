@@ -1,4 +1,4 @@
-export interface NamesState {
+export default interface NamesState {
   numberOfNames: number;
   names: {
     faces: string[];

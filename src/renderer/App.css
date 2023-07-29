@@ -12,8 +12,8 @@ input:focus {
   border: 2px solid var(--input-border-color);
   outline: none;
 }
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }

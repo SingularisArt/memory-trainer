@@ -1,4 +1,4 @@
-export interface InternationalNamesState {
+export default interface InternationalNamesState {
   numberOfInternationalNames: number;
   internationalNames: {
     faces: string[];

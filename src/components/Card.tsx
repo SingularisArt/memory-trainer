@@ -1,8 +1,8 @@
-import React from 'react';
-import { Card as MuiCard } from '@mui/material';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import React from "react";
+import { Card as MuiCard } from "@mui/material";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 
 type CardProps = {
   image: string;
@@ -16,8 +16,8 @@ type CardProps = {
 
 const Card: React.FC<CardProps> = ({
   image,
-  width = '100%',
-  height = '200px',
+  width = "100%",
+  height = "200px",
   title,
   description,
   color,
@@ -26,17 +26,17 @@ const Card: React.FC<CardProps> = ({
   return (
     <MuiCard
       sx={{
-        width: '100%',
+        width: "100%",
         backgroundColor: bg,
-        position: 'relative',
-        '&:hover': {
-          top: '-5px',
+        position: "relative",
+        "&:hover": {
+          top: "-5px",
         },
-        '& .MuiCardContent-root': {
+        "& .MuiCardContent-root": {
           borderBottom: `2px solid ${color}`,
         },
-        '& .MuiTypography-root': {
-          textDecoration: 'none',
+        "& .MuiTypography-root": {
+          textDecoration: "none",
         },
       }}
     >
@@ -47,22 +47,22 @@ const Card: React.FC<CardProps> = ({
           style={{
             width: width,
             height: height,
-            display: 'block',
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         />
       </CardMedia>
-      <CardContent style={{ backgroundColor: 'white' }}>
+      <CardContent style={{ backgroundColor: "white" }}>
         <Typography
           gutterBottom
-          variant='h5'
-          component='div'
+          variant="h5"
+          component="div"
           sx={{ color: color }}
         >
           {title}
         </Typography>
-        <Typography variant='body2'>{description}</Typography>
+        <Typography variant="body2">{description}</Typography>
       </CardContent>
     </MuiCard>
   );

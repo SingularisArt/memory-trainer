@@ -40,8 +40,7 @@ const CardsPage: React.FC<CardsPageProps> = () => {
     }
   };
 
-  return <Memorize onClick={() => {}} />;
-  // return <div>{renderPage()}</div>;
+  return <div>{renderPage()}</div>;
 };
 
 export default CardsPage;

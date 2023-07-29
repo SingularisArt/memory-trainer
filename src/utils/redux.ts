@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { RootState } from '../store/store';
+import { RootState } from "../store/store";
 
 export const CardsData = () => {
   const cardsData = useSelector((state: RootState) => state.cards);
@@ -17,7 +17,9 @@ export const ImagesData = () => {
 };
 
 export const InternationalNamesData = () => {
-  const internationalNamesData = useSelector((state: RootState) => state.internationalNames);
+  const internationalNamesData = useSelector(
+    (state: RootState) => state.internationalNames
+  );
   const dispatch = useDispatch();
 
   return { internationalNamesData, dispatch };

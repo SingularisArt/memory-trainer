@@ -1,4 +1,4 @@
-export interface WordsState {
+export default interface WordsState {
   numberOfWords: number;
   words: string[];
   groups: number;

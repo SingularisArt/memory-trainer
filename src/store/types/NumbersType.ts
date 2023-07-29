@@ -1,4 +1,4 @@
-export interface NumbersState {
+export default interface NumbersState {
   numberOfNumbers: number;
   numbers: number[];
   groups: number;

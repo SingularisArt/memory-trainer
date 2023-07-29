@@ -1,4 +1,4 @@
-import { NamesState } from "../types/NamesType";
+import NamesState from "../types/NamesType";
 
 export const initialState: NamesState = {
   numberOfNames: 30,

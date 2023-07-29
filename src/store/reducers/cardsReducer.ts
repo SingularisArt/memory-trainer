@@ -1,9 +1,13 @@
-import { CardsState } from "../types/CardsType";
+import CardsState from "../types/CardsType";
 
 export const initialState: CardsState = {
+  item: "Cards",
+  numberOfDecks: 1,
   numberOfCards: 52,
-  cards: [],
-  groups: 3,
+  decks: {
+    1: [],
+  },
+  groups: 2,
   cardSpacing: "regular",
   maxMemorizationTime: 60,
   maxRecallTime: 240,

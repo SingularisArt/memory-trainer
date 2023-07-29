@@ -1,4 +1,4 @@
-import { InternationalNamesState } from "../types/InternationalNamesType";
+import InternationalNamesState from "../types/InternationalNamesType";
 
 export const updateInternationalNamesData = (data: Partial<InternationalNamesState>) => {
   return {

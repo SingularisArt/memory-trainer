@@ -19,7 +19,7 @@
   height: 25px;
 }
 
-.card-spacing {
+.card-spacing, .item {
   width: 108px;
   height: 31px;
 }

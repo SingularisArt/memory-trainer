@@ -5,7 +5,7 @@ import createCache from "@emotion/cache";
 
 type ButtonProps = {
   icon?: React.ReactNode;
-  text: string;
+  text?: string;
   onClick?: () => void;
   style?: React.CSSProperties;
   className?: string;

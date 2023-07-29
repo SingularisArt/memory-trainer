@@ -1,4 +1,4 @@
-import { CardsState } from "../types/CardsType";
+import CardsState from "../types/CardsType";
 
 export const updateCardsData = (data: Partial<CardsState>) => {
   return {
