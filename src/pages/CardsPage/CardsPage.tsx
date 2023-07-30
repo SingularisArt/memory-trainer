@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import Home from "./Home";
-import Memorize from "./Memorize";
+import Memorize from "./Memorize/Memorize";
 import Preparation from "./Preparation";
 import Recall from "./Recall";
 import RecallBreak from "./RecallBreak";

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import { updateCardsData } from "../../store/actions/cardsActions";
-import { CardsData } from "../../utils/redux";
+import { updateCardsData } from "../../../store/actions/cardsActions";
+import { CardsData } from "../../../utils/redux";
 
-import DisplayCards from "../../components/DisplayCards/DisplayCards";
-import TimerHeader from "../../components/TimerHeader/TimerHeader";
+import DisplayCards from "./DisplayCards";
+import TimerHeader from "../../../components/TimerHeader/TimerHeader";
 
-import { randomDeckOfCards } from "../../utils/misc";
+import { randomDeckOfCards } from "../../../utils/misc";
 
-import { memoryTypes } from "../../config/theme";
+import { memoryTypes } from "../../../config/theme";
 
 type MemorizeProps = {
   onClick: () => void;
@@ -42,7 +42,6 @@ const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
     setLoading(false);
     dispatch(updateCardsData({ decks: deckData }));
   }, [item, decks, cards]);
-  console.log(data);
 
   if (loading) {
     return <div>Loading...</div>;

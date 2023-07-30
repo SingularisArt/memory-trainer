@@ -1,0 +1,23 @@
+.first-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.second-section {
+  display: flex;
+  justify-content: center;
+}
+
+.third-cards {
+  margin-left: -110px;
+}
+
+.arrow {
+  padding: 0.78571429em 1.5em 0.78571429em;
+  padding-right: 10px;
+  border-radius: 0.28571429rem;
+  background-color: var(--button-ok-background-color);
+  color: var(--button-ok-text-color);
+}
