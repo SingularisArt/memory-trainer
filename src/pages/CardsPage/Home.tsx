@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { updateCardsData } from "../../store/actions/cardsActions";
 import { CardsData } from "../../utils/redux";
@@ -16,7 +16,6 @@ type HomeProps = {
 
 const Home: React.FC<HomeProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
-  const [selectedItem, setSelectedItem] = useState(cardsData.item);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -29,7 +28,6 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
-    setSelectedItem(value);
     dispatch(updateCardsData({ [name]: value }));
   };
 
@@ -59,7 +57,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
               </td>
               <td className="note"></td>
             </tr>
-            {selectedItem === "Cards" && (
+            {cardsData.item === "Cards" && (
               <tr>
                 <td className="left">Number of Cards to Memorize:</td>
                 <td>
@@ -76,7 +74,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
                 <td className="note">Specify the number of cards you want to memorize (1-52).</td>
               </tr>
             )}
-            {selectedItem === "Decks" && (
+            {cardsData.item === "Decks" && (
               <tr>
                 <td className="left">Number of Decks to Memorize:</td>
                 <td>
@@ -119,6 +117,8 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
                 >
                   <option value="regular">Regular</option>
                   <option value="compact">Compact</option>
+                  <option value="tight">Tight</option>
+                  <option value="expand">Expand</option>
                 </select>
               </td>
               <td className="note">Select the distance between cards.</td>

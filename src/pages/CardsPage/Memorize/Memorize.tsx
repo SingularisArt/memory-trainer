@@ -16,6 +16,8 @@ type MemorizeProps = {
 
 const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
+  const [margin, setMargin] = useState("-125px")
+
   const item = cardsData.item;
   let decks: number;
   let cards: number;
@@ -41,7 +43,15 @@ const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
     setData(deckData);
     setLoading(false);
     dispatch(updateCardsData({ decks: deckData }));
-  }, [item, decks, cards]);
+
+    let margin: string = "-125px";
+    if (cardsData["cardSpacing"] == "regular") margin = "-125px";
+    else if (cardsData["cardSpacing"] == "compact") margin = "-175px";
+    else if (cardsData["cardSpacing"] == "tight") margin = "-200px";
+    else if (cardsData["cardSpacing"] == "expand") margin = "0px";
+
+    setMargin(margin);
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -60,7 +70,7 @@ const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
         dispatch={dispatch}
         updateData={updateCardsData}
       />
-      <DisplayCards images={data} group={cardsData.groups} data={cardsData} />
+      <DisplayCards images={data} margin={margin} group={cardsData.groups} />
     </div>
   );
 };
