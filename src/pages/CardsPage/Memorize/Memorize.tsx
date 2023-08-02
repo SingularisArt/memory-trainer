@@ -16,7 +16,7 @@ type MemorizeProps = {
 
 const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
-  const [margin, setMargin] = useState("-125px")
+  const [margin, setMargin] = useState("-125px");
 
   const item = cardsData.item;
   let decks: number;

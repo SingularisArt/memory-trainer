@@ -7,11 +7,11 @@ import TimerHeader from "../../components/TimerHeader/TimerHeader";
 
 import { memoryTypes } from "../../config/theme";
 
-type StatusProps = {
+type ScoreProps = {
   onClick: () => void;
 };
 
-const Status: React.FC<StatusProps> = ({ onClick }) => {
+const Score: React.FC<ScoreProps> = ({ onClick }) => {
   const { cardsData } = CardsData();
   const seconds = FormatSeconds(cardsData.finishedMemorizationTime)
 
@@ -21,11 +21,11 @@ const Status: React.FC<StatusProps> = ({ onClick }) => {
         color={memoryTypes.cards.color}
         title={`Cards (${seconds})`}
         finish={onClick}
-        text="Status"
+        text="Score"
         button="continue"
       />
     </div>
   );
 };
 
-export default Status;
+export default Score;

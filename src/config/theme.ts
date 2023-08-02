@@ -11,6 +11,11 @@ const mainTheme = {
   successColor: "#27ae60",
   disabledColor: "#bdc3c7",
   noteColor: "#959595",
+  cardColor: {
+    defaultColor: "#919191",
+    hoverCardColor: "#FFFACD",
+    activeCardColor: "#FFFF00",
+  },
   header: {
     background: "#F0F0F0",
     color: "#5A5A5A",

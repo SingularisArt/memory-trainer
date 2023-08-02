@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import Home from "./Home";
 import Memorize from "./Memorize/Memorize";
 import Preparation from "./Preparation";
-import Recall from "./Recall";
+import Recall from "./Recall/Recall";
 import RecallBreak from "./RecallBreak";
-import Status from "./Status";
+import Score from "./Score";
 
 import "./CardsPage.css";
 
@@ -16,7 +16,7 @@ type PageState =
   | "Memorize"
   | "RecallBreak"
   | "Recall"
-  | "Status";
+  | "Score";
 
 const CardsPage: React.FC<CardsPageProps> = () => {
   const [currentPage, setCurrentPage] = useState<PageState>("Home");
@@ -32,9 +32,9 @@ const CardsPage: React.FC<CardsPageProps> = () => {
       case "RecallBreak":
         return <RecallBreak onClick={() => setCurrentPage("Recall")} />;
       case "Recall":
-        return <Recall onClick={() => setCurrentPage("Status")} />;
-      case "Status":
-        return <Status onClick={() => setCurrentPage("Home")} />;
+        return <Recall onClick={() => setCurrentPage("Score")} />;
+      case "Score":
+        return <Score onClick={() => setCurrentPage("Home")} />;
       default:
         return null;
     }

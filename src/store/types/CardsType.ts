@@ -5,6 +5,9 @@ export default interface CardsState {
   decks: {
     [deckId: number]: string[];
   };
+  guessedDecks: {
+    [deckId: number]: string[];
+  };
   groups: number;
   cardSpacing: string;
   maxMemorizationTime: number;

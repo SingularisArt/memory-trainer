@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { updateCardsData } from "../../store/actions/cardsActions";
 import { CardsData } from "../../utils/redux";
@@ -16,6 +16,17 @@ type HomeProps = {
 
 const Home: React.FC<HomeProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
+
+  const newOnClick = () => {
+    if (
+      (cardsData.numberOfCards > 52 || cardsData.numberOfCards < 1) &&
+      cardsData.item == "Cards"
+    )
+      alert("Number of cards must be between 1 and 52");
+    else if (cardsData.groups > 10 || cardsData.groups < 1)
+      alert("Number of groups must be between 1 and 10");
+    else onClick();
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -71,7 +82,9 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
                     onChange={handleInputChange}
                   />
                 </td>
-                <td className="note">Specify the number of cards you want to memorize (1-52).</td>
+                <td className="note">
+                  Specify the number of cards you want to memorize (1-52).
+                </td>
               </tr>
             )}
             {cardsData.item === "Decks" && (
@@ -88,7 +101,9 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
                     onChange={handleInputChange}
                   />
                 </td>
-                <td className="note">Specify the number of decks you want to memorize.</td>
+                <td className="note">
+                  Specify the number of decks you want to memorize.
+                </td>
               </tr>
             )}
             <tr>
@@ -183,7 +198,7 @@ const Home: React.FC<HomeProps> = ({ onClick }) => {
         </table>
 
         <div className="start-btn-div">
-          <Button text="Start" className="start-btn" onClick={onClick} />
+          <Button text="Start" className="start-btn" onClick={newOnClick} />
         </div>
       </div>
     </>

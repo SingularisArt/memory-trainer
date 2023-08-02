@@ -7,6 +7,9 @@ export const initialState: CardsState = {
   decks: {
     1: [],
   },
+  guessedDecks: {
+    1: [],
+  },
   groups: 2,
   cardSpacing: "regular",
   maxMemorizationTime: 60,
