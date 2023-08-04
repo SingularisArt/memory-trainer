@@ -1,0 +1,11 @@
+.header {
+  background-color: var(--sidebar-header-background-color);
+  padding: 10px;
+}
+
+.timer {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  color: var(--note-color);
+}
