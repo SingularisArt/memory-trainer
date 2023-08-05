@@ -8,7 +8,7 @@ import NamesPage from "../pages/NamesPage/NamesPage";
 import NumbersPage from "../pages/NumbersPage/NumbersPage";
 import WordsPage from "../pages/WordsPage/WordsPage";
 
-import { Stats as CardsStats } from "../pages/CardsPage/Stats";
+import { Stats as CardsStats } from "../pages/CardsPage/Stats/Stats";
 import { Stats as ImagesStats } from "../pages/ImagesPage/Stats";
 import { Stats as InternationalNamesStats } from "../pages/InternationalNamesPage/Stats";
 import { Stats as NamesStats } from "../pages/NamesPage/Stats";
