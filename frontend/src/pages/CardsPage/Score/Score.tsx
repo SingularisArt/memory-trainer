@@ -1,20 +1,14 @@
-import React from "react";
-import {
-  BsFillSuitHeartFill,
-  BsFillSuitSpadeFill,
-  BsFillDiamondFill,
-  BsFillSuitClubFill,
-} from "react-icons/bs";
-import { renderToString } from "react-dom/server";
+import React, { useState } from "react";
+import axios from "axios";
 
 import { FormatSeconds } from "../../../utils/misc";
 import { CardsData } from "../../../utils/redux";
+import { updateCardsData } from "../../../store/actions/cardsActions";
 
-import { mainTheme } from "../../../config/theme";
-
-import CardGuess from "../../../components/CardGuess";
+import DisplayCorrectCards from "../DisplayCorrectCards";
 import TimerHeader from "../../../components/TimerHeader/TimerHeader";
 
+import config from "../../../config/config";
 import { memoryTypes } from "../../../config/theme";
 
 import "./Score.css";
@@ -24,99 +18,82 @@ type ScoreProps = {
 };
 
 const Score: React.FC<ScoreProps> = ({ onClick }) => {
-  const { cardsData } = CardsData();
+  const { cardsData, dispatch } = CardsData();
+  const [currentDeck, _setCurrentDeck] = useState<number>(0);
   const seconds = FormatSeconds(cardsData.finishedMemorizationTime);
 
-  const findKey = (card: string): JSX.Element => {
-    const lastPart = card.slice(card.length - 6);
-    const key = lastPart.slice(0, 2);
+  const actualDeck = cardsData.decks[currentDeck];
+  const memorizedDeck = cardsData.memorizedDecks[currentDeck];
 
-    let rank = key.slice(0, 1);
-    const suit = key.slice(1, 2);
+  const [outData] = useState({
+    username: "SingularisArt",
+    date: "",
+    finished_time: cardsData.finishedMemorizationTime,
+    score: 1,
+    item: cardsData.item,
+    number_of_items:
+      cardsData.item == "Cards"
+        ? cardsData.numberOfCards
+        : cardsData.numberOfDecks,
+    actual_card_data: JSON.stringify(cardsData.decks),
+    memorized_card_data: JSON.stringify(cardsData.memorizedDecks),
+    number_of_correctly_memorized_items: 52,
+    number_of_incorrectly_memorized_items: 0,
+  });
 
-    if (rank === "0") rank = "10";
+  const submitData = async () => {
+    const dateObj = new Date().toLocaleString("en-US", {
+      timeZone: config.timeZone,
+    });
 
-    const commonStyle = {
-      fontSize: "17px",
-      display: "inline-flex",
-      alignItems: "center",
-      fontFamily: "arial sans-serif",
+    const formattedDate = new Date(dateObj);
+    const year = formattedDate.getFullYear();
+    const month = (formattedDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = formattedDate.getDate().toString().padStart(2, "0");
+    const date = `${year}-${month}-${day}`;
+
+    const hour = formattedDate.getHours();
+    const minutes = formattedDate.getMinutes();
+    const seconds = formattedDate.getSeconds();
+    const time = `${hour}:${minutes}:${seconds}`;
+
+    const finalDate = `${date} ${time}`;
+    const dataToSend = {
+      ...outData,
+      date: finalDate,
+      number_of_correctly_memorized_items: cardsData.correctCards,
+      number_of_incorrectly_memorized_items: cardsData.incorrectCards,
+      score: cardsData.correctCards / (outData.number_of_items),
     };
 
-    if (suit === "H")
-      return (
-        <div style={{ ...commonStyle, color: "red" }}>
-          {rank}
-          <BsFillSuitHeartFill />
-        </div>
+    try {
+      const response = await axios.post(
+        "http://localhost:8800/cards",
+        dataToSend,
       );
-    else if (suit === "S")
-      return (
-        <div style={{ ...commonStyle, color: "black" }}>
-          {rank}
-          <BsFillSuitSpadeFill />
-        </div>
-      );
-    else if (suit === "D")
-      return (
-        <div style={{ ...commonStyle, color: "red" }}>
-          {rank}
-          <BsFillDiamondFill />
-        </div>
-      );
-    else if (suit === "C")
-      return (
-        <div style={{ ...commonStyle, color: "black" }}>
-          {rank}
-          <BsFillSuitClubFill />
-        </div>
-      );
-
-    return <div style={{ fontSize: "20px" }}>{rank}</div>;
+      onClick();
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const deck = cardsData.decks[1];
-  const guessedCards = cardsData.guessedDecks[1];
 
   return (
     <div>
       <TimerHeader
         color={memoryTypes.cards.color}
         title={`Cards (${seconds})`}
-        finish={onClick}
+        finish={submitData}
         text="Score"
         button="continue"
       />
 
-      <div className="status-cards" style={{ marginTop: "20px" }}>
-        {guessedCards.map((guessedCard: string, index: number) => {
-          const actualCard = deck[index - 1];
-          const correct = guessedCard === actualCard;
-          const key = findKey(actualCard);
-          const strKey = renderToString(key)
-          console.log(strKey.length)
-
-          return (
-            <CardGuess
-              key={index}
-              number={key}
-              numberStyle={{
-                left: strKey.length === 577 || strKey.length === 452 || strKey.length === 443 || strKey.length === 515 ? "6px" : "5px",
-              }}
-              style={{
-                marginLeft: index === 1 ? "0px" : "-125px",
-                border: correct ? "2px solid green" : "2px solid red",
-              }}
-              width={157}
-              height={219}
-              color={mainTheme.cardColor.defaultColor}
-              hoverColor={mainTheme.cardColor.defaultColor}
-              activeColor={mainTheme.cardColor.defaultColor}
-              cardImage={guessedCard ? guessedCard : ""}
-            />
-          );
-        })}
-      </div>
+      <DisplayCorrectCards
+        actualDeck={actualDeck}
+        memorizedDeck={memorizedDeck}
+        dispatch={dispatch}
+        updateData={updateCardsData}
+      />
     </div>
   );
 };

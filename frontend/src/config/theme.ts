@@ -36,7 +36,6 @@ const mainTheme = {
       background: "#E5E8EC",
       color: "#475F7B",
     },
-    width: "350px",
     header: {
       background: "#F0F0F0",
       color: "#5A5A5A",

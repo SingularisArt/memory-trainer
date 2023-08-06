@@ -5,10 +5,10 @@ export const initialState: CardsState = {
   numberOfDecks: 1,
   numberOfCards: 52,
   decks: {
-    1: [],
+    0: [],
   },
-  guessedDecks: {
-    1: [],
+  memorizedDecks: {
+    0: [],
   },
   groups: 2,
   cardSpacing: "regular",
@@ -17,6 +17,8 @@ export const initialState: CardsState = {
   preparationTime: 20,
   preparationBeforeRecallTime: 20,
   finishedMemorizationTime: 0,
+  correctCards: 0,
+  incorrectCards: 0,
 };
 
 const cardsReducer = (state = initialState, action: any) => {

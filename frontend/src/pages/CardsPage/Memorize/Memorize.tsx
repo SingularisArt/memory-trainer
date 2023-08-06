@@ -36,7 +36,7 @@ const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
   useEffect(() => {
     const deckData: { [deckId: number]: string[] } = {};
 
-    for (let i = 1; i <= decks; i++) {
+    for (let i = 0; i < decks; i++) {
       deckData[i] = randomDeckOfCards(cards);
     }
 

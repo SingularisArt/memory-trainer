@@ -26,7 +26,7 @@ for i in range(35):
 
     item = random.choice(choices)
     date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    finished_time = random.randint(1, 60)
+    finished_time = random.randint(1, 120)
 
     hour = random.randint(0, 23)
     minute = random.randint(0, 59)
@@ -47,7 +47,7 @@ for i in range(35):
         )
         score = round(number_of_correctly_memorized_items / number_of_items, 4)
     elif item == "Decks":
-        number_of_items = random.randint(1, 5)
+        number_of_items = random.randint(1, 3)
         number_of_correctly_memorized_items = random.randint(1, number_of_items * 52)
         number_of_incorrectly_memorized_items = (
             number_of_items * 52 - number_of_correctly_memorized_items

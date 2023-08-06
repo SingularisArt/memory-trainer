@@ -22,7 +22,7 @@ const DisplayCards: React.FC<DisplayCardsProps> = ({
   const [currentGroup, setCurrentGroup] = useState(0);
 
   const startIndex = currentGroup * group;
-  const newImages = images[1];
+  const newImages = images[0];
 
   const firstGroup = newImages.slice(0, startIndex);
   const secondGroup = newImages.slice(startIndex, startIndex + group);

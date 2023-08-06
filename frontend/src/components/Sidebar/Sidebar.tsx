@@ -1,17 +1,23 @@
-import { mainTheme } from "../../config/theme";
-import "./Sidebar.css";
-import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+
 import { TbLayoutSidebarLeftExpand } from "react-icons/tb";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
-import { Link } from "react-router-dom";
 
-const Sidebar = () => {
+import config from "../../config/config";
+
+import "./Sidebar.css";
+
+type SidebarProps = {};
+
+const Sidebar: React.FC<SidebarProps> = () => {
   const [isOpen, setIsopen] = useState(false);
 
   const ToggleSidebar = () => {
     isOpen === true ? setIsopen(false) : setIsopen(true);
   };
+
   return (
     <>
       <div className="container-fluid mt-3">
@@ -22,7 +28,7 @@ const Sidebar = () => {
         </div>
         <div
           className={`sidebar ${isOpen == true ? "active" : ""}`}
-          style={{ width: mainTheme.sidebar.width }}
+          style={{ width: config.sidebar.width }}
         >
           <div className="sd-header">
             <Typography gutterBottom variant="h5" component="div">

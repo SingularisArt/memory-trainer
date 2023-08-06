@@ -5,7 +5,7 @@ export default interface CardsState {
   decks: {
     [deckId: number]: string[];
   };
-  guessedDecks: {
+  memorizedDecks: {
     [deckId: number]: string[];
   };
   groups: number;
@@ -15,4 +15,6 @@ export default interface CardsState {
   preparationTime: number;
   preparationBeforeRecallTime: number;
   finishedMemorizationTime: number;
+  correctCards: number;
+  incorrectCards: number;
 }

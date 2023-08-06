@@ -21,19 +21,19 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
   const seconds = FormatSeconds(cardsData.finishedMemorizationTime);
 
-  const newOnClick = () => {
+  const handleOnClick = () => {
     let inputDeck: { [id: number]: string[] } = {};
     let numberOfDecks: number = 1;
     let numberOfCards: number = 52;
 
-    if (cardsData.item == "Cards") numberOfDecks = 1
-    else if (cardsData.item == "Decks") numberOfDecks = cardsData.numberOfDecks
+    if (cardsData.item == "Cards") numberOfCards = cardsData.numberOfCards;
+    else if (cardsData.item == "Decks") numberOfCards = 52;
 
-    if (cardsData.type == "Cards") numberOfCards = cardsData.numberOfCards
-    else if (cardsData.type == "Decks") numberOfCards = 52
+    if (cardsData.item == "Cards") numberOfDecks = 1;
+    else if (cardsData.item == "Decks") numberOfDecks = cardsData.numberOfDecks;
 
-    for (let deckIndex = 1; deckIndex <= numberOfDecks; deckIndex++) {
-      for (let cardIndex = 1; cardIndex <= numberOfCards; cardIndex++) {
+    for (let deckIndex = 0; deckIndex < numberOfDecks; deckIndex++) {
+      for (let cardIndex = 0; cardIndex < numberOfCards; cardIndex++) {
         const card = document.querySelector(
           `.card-${cardIndex}`
         ) as HTMLImageElement;
@@ -50,7 +50,7 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
       }
     }
 
-    dispatch(updateCardsData({ guessedDecks: inputDeck }));
+    dispatch(updateCardsData({ memorizedDecks: inputDeck }));
     onClick();
   };
 
@@ -163,7 +163,7 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
         color={memoryTypes.cards.color}
         title={`Cards (${seconds})`}
         time={cardsData.maxRecallTime}
-        finish={newOnClick}
+        finish={() => handleOnClick()}
         text="Recall ends in"
         button="finished"
       />
@@ -172,8 +172,11 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
         {Array.from({ length: cardsData.numberOfCards }, (_, index) => (
           <CardGuess
             key={index}
-            className={`card-${index + 1}`}
-            number={index + 1}
+            className={`card-${index}`}
+            number={index}
+            numberStyle={{
+              left: "15px",
+            }}
             style={{
               marginLeft: index === 0 ? "0px" : "-125px",
             }}
@@ -182,8 +185,8 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
             color={mainTheme.cardColor.defaultColor}
             hoverColor={mainTheme.cardColor.hoverCardColor}
             activeColor={mainTheme.cardColor.activeCardColor}
-            onClick={() => handleCardClick(index + 1)}
-            isActive={activeCard === index + 1}
+            onClick={() => handleCardClick(index)}
+            isActive={activeCard === (index)}
           />
         ))}
       </div>

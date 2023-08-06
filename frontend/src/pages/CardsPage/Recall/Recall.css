@@ -1,16 +1,9 @@
-html,
-body {
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
-}
-
 .input-section,
 .deck-of-cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  row-gap: 10px;
+  row-gap: 15px;
 }
 
 .deck-of-cards {
@@ -22,6 +15,7 @@ body {
 }
 
 .input-section {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 

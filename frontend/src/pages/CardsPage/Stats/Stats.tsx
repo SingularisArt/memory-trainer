@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Typography from "@mui/material/Typography";
+
 import {
   AreaSeries,
   ChartComponent,
@@ -10,35 +13,26 @@ import {
   Legend,
   IPointEventArgs,
 } from "@syncfusion/ej2-react-charts";
-import axios from "axios";
 
+import DisplayCorrectCards from "../DisplayCorrectCards";
 import Header from "../../../components/Header/Header";
 
 import { FormatSeconds } from "../../../utils/misc";
 import { memoryTypes } from "../../../config/theme";
 
 import Cards from "../../../images/headers/cards.png";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import "./Stats.css";
 
 type StatsProps = {};
-
-const DateRangeButton: React.FC<{ updateData: (range: string) => void }> = ({ updateData }) => {
-  return (
-    <div className="date-range-buttons">
-      <button onClick={() => updateData("today")}>Today</button>
-      <button onClick={() => updateData("week")}>This Week</button>
-      <button onClick={() => updateData("month")}>This Month</button>
-      <button onClick={() => updateData("allTime")}>All Time</button>
-      <button onClick={() => updateData("custom")}>Custom Range</button>
-    </div>
-  );
-};
 
 const Stats: React.FC<StatsProps> = () => {
   const [cards, setCards] = useState([]);
   const [data, setData] = useState(cards);
   const [selectedData, setSelectedData] = useState(null);
   const [dateRange, setDateRange] = useState<string>("allTime");
+  const [currentDeck, _setCurrentDeck] = useState<number>(0);
 
   useEffect(() => {
     const fetchAllBooks = async () => {
@@ -73,40 +67,56 @@ const Stats: React.FC<StatsProps> = () => {
       newData = newData.filter((item) => new Date(item.date) >= today);
     } else if (range === "month") {
       const today = new Date();
-      const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+      const firstDayOfMonth = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        1,
+      );
       firstDayOfMonth.setHours(0, 0, 0, 0);
-      newData = newData.filter((item) => new Date(item.date) >= firstDayOfMonth);
+      newData = newData.filter(
+        (item) => new Date(item.date) >= firstDayOfMonth,
+      );
     } else if (range === "custom") {
-      // Implement custom range filtering logic here
+      // TODO: Implement custom date range
     }
 
+    setSelectedData(newData[newData.length - 1]);
     setData(newData);
   };
 
   const processData = (data) => {
     return data.map((item) => {
+      try {
+        item.memorized_card_data = JSON.parse(item.memorized_card_data);
+        item.actual_card_data = JSON.parse(item.actual_card_data);
+      } catch (err) {
+        console.log(err);
+      }
+
       const dateObj = new Date(item.date);
-      const formattedDate = dateObj.toLocaleString('en-US', {
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric'
+      const formattedDate = dateObj.toLocaleString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
       });
 
-      const formattedTime = dateObj.toLocaleString('en-US', {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
+      const formattedTime = dateObj.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
       });
 
-      const date = `Date: ${formattedDate} (${formattedTime})`
+      const date = `Date: ${formattedDate} (${formattedTime})`;
 
       const xValue = dateObj.getTime();
       const yValue =
         item.item === "Cards"
           ? item.number_of_items / 52
           : item.number_of_items;
-      const finishedTime = `Finished Time: ${FormatSeconds(item.finished_time)}`;
+      const finishedTime = `Finished Time: ${FormatSeconds(
+        item.finished_time,
+      )}`;
       const score = `Score: ${(item.score * 100).toFixed(2)}%`;
       const cardsOrDecks =
         item.item === "Decks"
@@ -136,13 +146,13 @@ const Stats: React.FC<StatsProps> = () => {
 
   const processedData = processData(data);
 
-  const tooltipRender = (args) => {
+  const tooltipRender = (args: any) => {
     if (args.series && args.series.tooltipMappingName === "tooltip") {
       args.text = args.text.replace(/&amp;/g, "&");
     }
   };
 
-  const calculateYAxisRange = (data) => {
+  const calculateYAxisRange = (data): { maxDecks: number } => {
     let maxDecks = 0;
 
     data.forEach((item) => {
@@ -175,9 +185,65 @@ const Stats: React.FC<StatsProps> = () => {
       />
 
       <div className="graph">
+        <div className="date-range-buttons">
+          <button
+            className={
+              dateRange == "today"
+                ? "date-range-button-enabled"
+                : "date-range-button"
+            }
+            onClick={() => updateData("today")}
+          >
+            Today
+          </button>
+          <button
+            className={
+              dateRange == "week"
+                ? "date-range-button-enabled"
+                : "date-range-button"
+            }
+            onClick={() => updateData("week")}
+          >
+            This Week
+          </button>
+          <button
+            className={
+              dateRange == "month"
+                ? "date-range-button-enabled"
+                : "date-range-button"
+            }
+            onClick={() => updateData("month")}
+          >
+            This Month
+          </button>
+          <button
+            className={
+              dateRange == "allTime"
+                ? "date-range-button-enabled"
+                : "date-range-button"
+            }
+            onClick={() => updateData("allTime")}
+          >
+            All Time
+          </button>
+          <button
+            className={
+              dateRange == "custom"
+                ? "date-range-button-enabled"
+                : "date-range-button"
+            }
+            onClick={() => {}}
+          >
+            Custom Range
+          </button>
+        </div>
+
         <ChartComponent
           id="chart"
-          primaryXAxis={{ valueType: "DateTime", labelFormat: "M/d/yyyy" }}
+          primaryXAxis={{
+            valueType: "DateTime",
+            labelFormat: dateRange === "today" ? "hm" : "M/d/yyyy",
+          }}
           primaryYAxis={{
             minimum: 0,
             maximum: yAxisRange.maxDecks,
@@ -204,38 +270,52 @@ const Stats: React.FC<StatsProps> = () => {
             />
           </SeriesCollectionDirective>
         </ChartComponent>
-
-        <DateRangeButton updateData={updateData} />
       </div>
 
       <div className="more-detail">
         {selectedData ? (
           <>
             {(() => {
+              const actualDeck = selectedData.actual_card_data[currentDeck];
+              const memorizedDeck = selectedData.memorized_card_data[currentDeck];
+
               const dateObj = new Date(selectedData.date);
-              const formattedDate = dateObj.toLocaleString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric'
+              const formattedDate = dateObj.toLocaleString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
               });
 
-              const formattedTime = dateObj.toLocaleString('en-US', {
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric',
+              const formattedTime = dateObj.toLocaleString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+                second: "numeric",
               });
 
               return (
-                <h1>
-                  {formattedDate} ({formattedTime})
-                </h1>
+                <div>
+                  <Typography
+                    className="title"
+                    gutterBottom
+                    variant="h3"
+                    component="div"
+                    sx={{ color: memoryTypes.cards.color }}
+                  >
+                    {formattedDate} ({formattedTime})
+                  </Typography>
+
+                  <DisplayCorrectCards
+                    actualDeck={actualDeck}
+                    memorizedDeck={memorizedDeck}
+                  />
+                </div>
               );
             })()}
           </>
         ) : (
-            "Select a point on the chart to view more details."
-          )}
+          "Select a point on the chart to view more details."
+        )}
       </div>
     </div>
   );
