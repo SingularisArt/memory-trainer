@@ -242,7 +242,12 @@ const Stats: React.FC<StatsProps> = () => {
           id="chart"
           primaryXAxis={{
             valueType: "DateTime",
-            labelFormat: dateRange === "today" ? "hm" : "M/d/yyyy",
+            labelFormat:
+              dateRange === "today"
+                ? "hh a"
+                : dateRange === "week"
+                ? "E"
+                : "M/d/yyyy",
           }}
           primaryYAxis={{
             minimum: 0,
@@ -277,7 +282,8 @@ const Stats: React.FC<StatsProps> = () => {
           <>
             {(() => {
               const actualDeck = selectedData.actual_card_data[currentDeck];
-              const memorizedDeck = selectedData.memorized_card_data[currentDeck];
+              const memorizedDeck =
+                selectedData.memorized_card_data[currentDeck];
 
               const dateObj = new Date(selectedData.date);
               const formattedDate = dateObj.toLocaleString("en-US", {

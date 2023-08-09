@@ -1,6 +1,3 @@
-import axios from "axios";
-import { useEffect } from "react";
-
 export const FormatSeconds = (seconds: number): string => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
