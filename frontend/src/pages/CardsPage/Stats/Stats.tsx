@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import Typography from "@mui/material/Typography";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 import {
   AreaSeries,
   ChartComponent,
+  DateTime,
+  IPointEventArgs,
+  Inject,
+  Legend,
   SeriesCollectionDirective,
   SeriesDirective,
-  Inject,
   Tooltip,
-  DateTime,
-  Legend,
-  IPointEventArgs,
 } from "@syncfusion/ej2-react-charts";
 
-import DisplayCorrectCards from "../DisplayCorrectCards";
 import Header from "../../../components/Header/Header";
+import DisplayCorrectCards from "../DisplayCorrectCards";
 
-import { FormatSeconds } from "../../../utils/misc";
 import { memoryTypes } from "../../../config/theme";
+import { FormatSeconds } from "../../../utils/misc";
 
 import Cards from "../../../images/headers/cards.png";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
 import "./Stats.css";
 
 type StatsProps = {};
 
 const Stats: React.FC<StatsProps> = () => {
   const [cards, setCards] = useState([]);
+  const [format, setFormat] = useState("MMM");
+  const [interval, setInterval] = useState("Months");
   const [data, setData] = useState(cards);
   const [selectedData, setSelectedData] = useState(null);
   const [dateRange, setDateRange] = useState<string>("allTime");
@@ -59,12 +59,18 @@ const Stats: React.FC<StatsProps> = () => {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       newData = newData.filter((item) => new Date(item.date) >= today);
+
+      setInterval("Hours");
+      setFormat("h a");
     } else if (range === "week") {
       const today = new Date();
       const firstDayOfWeek = today.getDate() - today.getDay();
       today.setDate(firstDayOfWeek);
       today.setHours(0, 0, 0, 0);
       newData = newData.filter((item) => new Date(item.date) >= today);
+
+      setInterval("Days");
+      setFormat("EEEE");
     } else if (range === "month") {
       const today = new Date();
       const firstDayOfMonth = new Date(
@@ -76,6 +82,9 @@ const Stats: React.FC<StatsProps> = () => {
       newData = newData.filter(
         (item) => new Date(item.date) >= firstDayOfMonth,
       );
+
+      setInterval("Months");
+      setFormat("MMM");
     } else if (range === "custom") {
       // TODO: Implement custom date range
     }
@@ -242,14 +251,11 @@ const Stats: React.FC<StatsProps> = () => {
           id="chart"
           primaryXAxis={{
             valueType: "DateTime",
-            labelFormat:
-              dateRange === "today"
-                ? "hh a"
-                : dateRange === "week"
-                ? "E"
-                : "M/d/yyyy",
+            intervalType: interval,
+            labelFormat: format,
           }}
           primaryYAxis={{
+            title: "Decks",
             minimum: 0,
             maximum: yAxisRange.maxDecks,
             interval: 1,

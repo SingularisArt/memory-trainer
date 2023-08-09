@@ -70,7 +70,7 @@ const Memorize: React.FC<MemorizeProps> = ({ onClick }) => {
         dispatch={dispatch}
         updateData={updateCardsData}
       />
-      <DisplayCards images={data} margin={margin} group={cardsData.groups} />
+      <DisplayCards data={data} margin={margin} group={cardsData.groups} />
     </div>
   );
 };

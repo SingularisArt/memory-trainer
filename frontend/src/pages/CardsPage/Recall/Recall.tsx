@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import { CardsData } from "../../../utils/redux";
 import { FormatSeconds } from "../../../utils/misc";
@@ -19,42 +19,10 @@ type RecallProps = {
 
 const Recall: React.FC<RecallProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
-  const seconds = FormatSeconds(cardsData.finishedMemorizationTime);
 
-  const handleOnClick = () => {
-    let inputDeck: { [id: number]: string[] } = {};
-    let numberOfDecks: number = 1;
-    let numberOfCards: number = 52;
+  const [activeCard, setActiveCard] = useState<number>(0);
+  const [currentDeck, _setCurrentDeck] = useState(0);
 
-    if (cardsData.item == "Cards") numberOfCards = cardsData.numberOfCards;
-    else if (cardsData.item == "Decks") numberOfCards = 52;
-
-    if (cardsData.item == "Cards") numberOfDecks = 1;
-    else if (cardsData.item == "Decks") numberOfDecks = cardsData.numberOfDecks;
-
-    for (let deckIndex = 0; deckIndex < numberOfDecks; deckIndex++) {
-      for (let cardIndex = 0; cardIndex < numberOfCards; cardIndex++) {
-        const card = document.querySelector(
-          `.card-${cardIndex}`
-        ) as HTMLImageElement;
-
-        try {
-          const background = card.style.backgroundImage.slice(5, -2);
-          inputDeck[deckIndex][cardIndex] = background;
-        } catch (error) {
-          inputDeck[deckIndex] = [];
-
-          const background = card.style.backgroundImage.slice(5, -2);
-          inputDeck[deckIndex][cardIndex] = background;
-        }
-      }
-    }
-
-    dispatch(updateCardsData({ memorizedDecks: inputDeck }));
-    onClick();
-  };
-
-  const [activeCard, setActiveCard] = useState<number | null>(null);
   const [deck] = useState<string[]>([
     "https://deckofcardsapi.com/static/img/AH.png",
     "https://deckofcardsapi.com/static/img/2H.png",
@@ -113,9 +81,83 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
     "https://deckofcardsapi.com/static/img/KC.png",
   ]);
 
+  const currentlySelectedData = cardsData.decks[currentDeck];
+  const seconds = FormatSeconds(cardsData.finishedMemorizationTime);
+
+  const handleOnClick = () => {
+    let inputDeck: { [id: number]: string[] } = {};
+    let numberOfDecks: number = 1;
+    let numberOfCards: number = 52;
+
+    if (cardsData.item == "Cards") numberOfCards = cardsData.numberOfCards;
+    else if (cardsData.item == "Decks") numberOfCards = 52;
+
+    if (cardsData.item == "Cards") numberOfDecks = 1;
+    else if (cardsData.item == "Decks") numberOfDecks = cardsData.numberOfDecks;
+
+    for (let deckIndex = 0; deckIndex < numberOfDecks; deckIndex++) {
+      for (let cardIndex = 0; cardIndex < numberOfCards; cardIndex++) {
+        const card = document.querySelector(
+          `.card-${cardIndex}`,
+        ) as HTMLImageElement;
+
+        try {
+          const background = card.style.backgroundImage.slice(5, -2);
+          inputDeck[deckIndex][cardIndex] = background;
+        } catch (error) {
+          inputDeck[deckIndex] = [];
+
+          const background = card.style.backgroundImage.slice(5, -2);
+          inputDeck[deckIndex][cardIndex] = background;
+        }
+      }
+    }
+
+    dispatch(updateCardsData({ memorizedDecks: inputDeck }));
+    onClick();
+  };
+
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") {
+        requestAnimationFrame(() =>
+          setActiveCard((prev) => {
+            if (prev > 0) {
+              console.log(prev, prev-1);
+              if (prev === 0) return 0;
+              return prev - 1;
+            }
+          }),
+        );
+      }
+      if (event.key === "ArrowRight") {
+        requestAnimationFrame(() =>
+          setActiveCard((prev) => prev >= 0 && prev + 1),
+        );
+      }
+
+      if (event.key === "ArrowUp") {
+        requestAnimationFrame(() => setActiveCard(0));
+      }
+      if (event.key === "ArrowDown") {
+        requestAnimationFrame(() =>
+          setActiveCard(currentlySelectedData.length),
+        );
+      }
+    },
+    [activeCard],
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
   const handleCardClick = (cardNumber: number) => {
     if (activeCard === cardNumber) {
-      setActiveCard(null);
     } else {
       setActiveCard(cardNumber);
     }
@@ -123,7 +165,7 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
 
   const toggleImageVisibility = (cardNumber: number, isVisible: boolean) => {
     const image = document.querySelector(
-      `.image-${cardNumber}`
+      `.image-${cardNumber}`,
     ) as HTMLImageElement;
 
     if (image) {
@@ -133,13 +175,13 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
 
   const handleImageClick = (cardNumber: number) => {
     const card = document.querySelector(
-      `.card-${activeCard}`
+      `.card-${activeCard}`,
     ) as HTMLImageElement;
 
     if (!card) return;
 
     const image = document.querySelector(
-      `.image-${cardNumber}`
+      `.image-${cardNumber}`,
     ) as HTMLImageElement;
 
     if (image && card) {
@@ -163,7 +205,8 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
         color={memoryTypes.cards.color}
         title={`Cards (${seconds})`}
         time={cardsData.maxRecallTime}
-        finish={() => handleOnClick()}
+        // finish={() => handleOnClick()}
+        finish={() => {}}
         text="Recall ends in"
         button="finished"
       />
@@ -173,7 +216,7 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
           <CardGuess
             key={index}
             className={`card-${index}`}
-            number={index}
+            number={index + 1}
             numberStyle={{
               left: "15px",
             }}
@@ -186,7 +229,7 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
             hoverColor={mainTheme.cardColor.hoverCardColor}
             activeColor={mainTheme.cardColor.activeCardColor}
             onClick={() => handleCardClick(index)}
-            isActive={activeCard === (index)}
+            isActive={activeCard === index}
           />
         ))}
       </div>

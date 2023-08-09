@@ -1,16 +1,21 @@
-.first-section {
+.first-section,
+.second-section {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .second-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.third-section {
   display: flex;
   justify-content: center;
 }
 
-.third-cards {
+.right-cards {
   margin-left: -110px;
 }
 
