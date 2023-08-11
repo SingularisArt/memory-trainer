@@ -1,0 +1,25 @@
+.status-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 15px;
+}
+
+.change-deck-of-cards {
+  display: flex;
+  column-gap: 10px;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.date-range-button,
+.change-deck-button {
+  background-color: #69d2e7;
+  color: black;
+}
+
+.date-range-button-enabled,
+.change-deck-button-enabled {
+  background-color: #a7dbd8;
+  color: black;
+}

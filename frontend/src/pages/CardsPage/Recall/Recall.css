@@ -1,17 +1,10 @@
 .input-section,
+.deck-of-cards-selection,
 .deck-of-cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   row-gap: 15px;
-}
-
-.deck-of-cards {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin-bottom: -165px;
 }
 
 .input-section {

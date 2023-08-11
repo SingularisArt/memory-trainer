@@ -9,26 +9,6 @@
   margin-right: 10px;
 }
 
-.date-range-button {
-  padding: 10px;
-  background-color: #69D2E7;
-  color: black;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 5px;
-}
-
-.date-range-button-enabled {
-  padding: 10px;
-  background-color: #A7DBD8;
-  color: black;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 5px;
-}
-
 .more-detail {
   margin: 10px;
 }

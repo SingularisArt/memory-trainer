@@ -14,6 +14,7 @@ import {
   Tooltip,
 } from "@syncfusion/ej2-react-charts";
 
+import Button from "../../../components/Button";
 import Header from "../../../components/Header/Header";
 import DisplayCorrectCards from "../DisplayCorrectCards";
 
@@ -21,18 +22,49 @@ import { memoryTypes } from "../../../config/theme";
 import { FormatSeconds } from "../../../utils/misc";
 
 import Cards from "../../../images/headers/cards.png";
+import "../GlobalStyles.css";
 import "./Stats.css";
 
 type StatsProps = {};
+type CardsState = {
+  username: string;
+  date: string;
+  finishedTime: number;
+  score: number;
+  item: string;
+  numberOfItems: number;
+  actualCardData: string;
+  memorizedCardData: string;
+  numberOfCorrectlyMemorizedItems: number,
+  numberOfIncorrectlyMemorizedItems: number,
+};
+
+type FormatState =
+  | "h a"
+  | "EEEE"
+  | "d MMM"
+  | "MMM yyyy";
+
+type IntervalState =
+  | "Hours"
+  | "Days"
+  | "Months";
+
+type DateRange =
+  | "today"
+  | "week"
+  | "month"
+  | "allTime"
+  | "custom";
 
 const Stats: React.FC<StatsProps> = () => {
-  const [cards, setCards] = useState([]);
-  const [format, setFormat] = useState("MMM");
-  const [interval, setInterval] = useState("Months");
-  const [data, setData] = useState(cards);
-  const [selectedData, setSelectedData] = useState(null);
-  const [dateRange, setDateRange] = useState<string>("allTime");
-  const [currentDeck, _setCurrentDeck] = useState<number>(0);
+  const [cards, setCards] = useState<CardsState[]>([]);
+  const [format, setFormat] = useState<FormatState>("MMM yyyy");
+  const [interval, setInterval] = useState<IntervalState>("Months");
+  const [data, setData] = useState<CardsState[]>(cards);
+  const [selectedData, setSelectedData] = useState<typeof cards | null>(null);
+  const [dateRange, setDateRange] = useState<DateRange>("allTime");
+  const [currentDeck, setCurrentDeck] = useState<number>(0);
 
   useEffect(() => {
     const fetchAllBooks = async () => {
@@ -43,14 +75,12 @@ const Stats: React.FC<StatsProps> = () => {
         if (res.data.length > 0) {
           setSelectedData(res.data[res.data.length - 1]);
         }
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
     fetchAllBooks();
   }, []);
 
-  const updateData = (range: string) => {
+  const updateData = (range: DateRange) => {
     setDateRange(range);
 
     let newData = [...cards];
@@ -83,8 +113,11 @@ const Stats: React.FC<StatsProps> = () => {
         (item) => new Date(item.date) >= firstDayOfMonth,
       );
 
+      setInterval("Days");
+      setFormat("d MMM");
+    } else if (range === "allTime") {
       setInterval("Months");
-      setFormat("MMM");
+      setFormat("MMM yyyy");
     } else if (range === "custom") {
       // TODO: Implement custom date range
     }
@@ -93,14 +126,14 @@ const Stats: React.FC<StatsProps> = () => {
     setData(newData);
   };
 
-  const processData = (data) => {
+  const processData = (data: typeof cards) => {
+    if (!data) return [];
+
     return data.map((item) => {
       try {
-        item.memorized_card_data = JSON.parse(item.memorized_card_data);
-        item.actual_card_data = JSON.parse(item.actual_card_data);
-      } catch (err) {
-        console.log(err);
-      }
+        item.memorizedCardData = JSON.parse(item.memorizedCardData);
+        item.actualCardData = JSON.parse(item.actualCardData);
+      } catch (err) {}
 
       const dateObj = new Date(item.date);
       const formattedDate = dateObj.toLocaleString("en-US", {
@@ -117,24 +150,24 @@ const Stats: React.FC<StatsProps> = () => {
       });
 
       const date = `Date: ${formattedDate} (${formattedTime})`;
+      const xValue: number = dateObj.getTime();
 
-      const xValue = dateObj.getTime();
       const yValue =
         item.item === "Cards"
-          ? item.number_of_items / 52
-          : item.number_of_items;
+          ? item.numberOfItems / 52
+          : item.numberOfItems;
       const finishedTime = `Finished Time: ${FormatSeconds(
-        item.finished_time,
+        item.finishedTime,
       )}`;
       const score = `Score: ${(item.score * 100).toFixed(2)}%`;
       const cardsOrDecks =
         item.item === "Decks"
-          ? `Decks: ${item.number_of_items}`
-          : item.number_of_items === 52
+          ? `Decks: ${item.numberOfItems}`
+          : item.numberOfItems === 52
           ? "Decks: 1"
-          : `Cards: ${item.number_of_items}`;
-      const memorizedCorrectly = `Correctly Memorized: ${item.number_of_correctly_memorized_items}`;
-      const memorizedIncorrectly = `Incorrectly Memorized: ${item.number_of_incorrectly_memorized_items}`;
+          : `Cards: ${item.numberOfItems}`;
+      const memorizedCorrectly = `Correctly Memorized: ${item.numberOfCorrectlyMemorizedItems}`;
+      const memorizedIncorrectly = `Incorrectly Memorized: ${item.numberOfIncorrectlyMemorizedItems}`;
 
       const tooltip =
         date +
@@ -161,13 +194,13 @@ const Stats: React.FC<StatsProps> = () => {
     }
   };
 
-  const calculateYAxisRange = (data): { maxDecks: number } => {
+  const calculateYAxisRange = (data: typeof cards): { maxDecks: number } => {
     let maxDecks = 0;
 
     data.forEach((item) => {
       if (item.item === "Decks") {
-        if (item.number_of_items > maxDecks) {
-          maxDecks = item.number_of_items;
+        if (item.numberOfItems > maxDecks) {
+          maxDecks = item.numberOfItems;
         }
       }
     });
@@ -180,7 +213,36 @@ const Stats: React.FC<StatsProps> = () => {
   const yAxisRange = calculateYAxisRange(data);
 
   const pointClick = (args: IPointEventArgs) => {
+    setCurrentDeck(0);
     setSelectedData(data[args.pointIndex]);
+  };
+
+  const displayDecksOfCards = () => {
+    if (!selectedData) return <></>;
+
+    const data = selectedData.memorizedCardData;
+    if (Object.keys(data) == 0) return <></>;
+
+    return (
+      <div className="change-deck-of-cards">
+        {Object.keys(data).length > 1 && (
+          <>
+            {Object.keys(data).map((_key, index) => (
+              <Button
+                key={index}
+                text={(index + 1).toString()}
+                className={`change-deck-button ${
+                  currentDeck === index ? "change-deck-button-enabled" : ""
+                }`}
+                onClick={() => {
+                  setCurrentDeck(index);
+                }}
+              />
+            ))}
+          </>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -195,60 +257,54 @@ const Stats: React.FC<StatsProps> = () => {
 
       <div className="graph">
         <div className="date-range-buttons">
-          <button
+          <Button
             className={
               dateRange == "today"
                 ? "date-range-button-enabled"
                 : "date-range-button"
             }
             onClick={() => updateData("today")}
-          >
-            Today
-          </button>
-          <button
+            text="Today"
+          />
+          <Button
             className={
               dateRange == "week"
                 ? "date-range-button-enabled"
                 : "date-range-button"
             }
             onClick={() => updateData("week")}
-          >
-            This Week
-          </button>
-          <button
+            text="This Week"
+          />
+          <Button
             className={
               dateRange == "month"
                 ? "date-range-button-enabled"
                 : "date-range-button"
             }
             onClick={() => updateData("month")}
-          >
-            This Month
-          </button>
-          <button
+            text="This Month"
+          />
+          <Button
             className={
               dateRange == "allTime"
                 ? "date-range-button-enabled"
                 : "date-range-button"
             }
             onClick={() => updateData("allTime")}
-          >
-            All Time
-          </button>
-          <button
+            text="All Time"
+          />
+          <Button
             className={
               dateRange == "custom"
                 ? "date-range-button-enabled"
                 : "date-range-button"
             }
-            onClick={() => {}}
-          >
-            Custom Range
-          </button>
+            onClick={() => updateData("custom")}
+            text="Custom Range"
+          />
         </div>
 
         <ChartComponent
-          id="chart"
           primaryXAxis={{
             valueType: "DateTime",
             intervalType: interval,
@@ -269,7 +325,7 @@ const Stats: React.FC<StatsProps> = () => {
           <SeriesCollectionDirective>
             <SeriesDirective
               dataSource={processedData}
-              xName="date"
+              xName="xValue"
               yName="yValue"
               type="Area"
               opacity={0.6}
@@ -287,9 +343,9 @@ const Stats: React.FC<StatsProps> = () => {
         {selectedData ? (
           <>
             {(() => {
-              const actualDeck = selectedData.actual_card_data[currentDeck];
+              const actualDeck = selectedData.actualCardData[currentDeck];
               const memorizedDeck =
-                selectedData.memorized_card_data[currentDeck];
+                selectedData.memorizedCardData[currentDeck];
 
               const dateObj = new Date(selectedData.date);
               const formattedDate = dateObj.toLocaleString("en-US", {
@@ -316,6 +372,8 @@ const Stats: React.FC<StatsProps> = () => {
                   >
                     {formattedDate} ({formattedTime})
                   </Typography>
+
+                  {displayDecksOfCards()}
 
                   <DisplayCorrectCards
                     actualDeck={actualDeck}

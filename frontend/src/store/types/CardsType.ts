@@ -17,4 +17,5 @@ export default interface CardsState {
   finishedMemorizationTime: number;
   correctCards: number;
   incorrectCards: number;
+  score: number;
 }

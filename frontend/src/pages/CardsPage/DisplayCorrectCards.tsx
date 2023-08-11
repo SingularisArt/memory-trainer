@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   BsFillSuitHeartFill,
   BsFillSuitSpadeFill,
@@ -21,29 +21,7 @@ type DisplayCorrectCardsProps = {
 const DisplayCorrectCards: React.FC<DisplayCorrectCardsProps> = ({
   actualDeck,
   memorizedDeck,
-  dispatch,
-  updateData,
 }) => {
-  console.log(actualDeck, memorizedDeck);
-
-  useEffect(() => {
-    if (dispatch && updateData) {
-      let correctCards = 0;
-      let incorrectCards = 0;
-
-      memorizedDeck.forEach((memorizedCard: string, index: number) => {
-        const actualCard = actualDeck[index];
-        const correct = memorizedCard === actualCard;
-
-        if (correct) correctCards++;
-        else incorrectCards++;
-      });
-
-      dispatch(updateData({ correctCards: correctCards }));
-      dispatch(updateData({ incorrectCards: incorrectCards }));
-    }
-  }, [actualDeck, memorizedDeck, dispatch, updateData]);
-
   const findKey = (card: string): JSX.Element => {
     const lastPart = card.slice(card.length - 6);
     const key = lastPart.slice(0, 2);

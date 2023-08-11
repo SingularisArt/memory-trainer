@@ -19,6 +19,7 @@ export const initialState: CardsState = {
   finishedMemorizationTime: 0,
   correctCards: 0,
   incorrectCards: 0,
+  score: 0,
 };
 
 const cardsReducer = (state = initialState, action: any) => {

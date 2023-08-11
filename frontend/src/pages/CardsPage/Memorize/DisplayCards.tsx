@@ -4,6 +4,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Button from "../../../components/Button";
 
 import "./DisplayCards.css";
+import "../GlobalStyles.css";
 
 type DisplayCardsProps = {
   data: {
@@ -48,12 +49,12 @@ const DisplayCards: React.FC<DisplayCardsProps> = ({ data, group, margin }) => {
       }
 
       if (event.key === "ArrowUp") {
+        requestAnimationFrame(() => setCurrentGroup(0));
+      }
+      if (event.key === "ArrowDown") {
         requestAnimationFrame(() =>
           setCurrentGroup(currentlySelectedData.length / group - 1),
         );
-      }
-      if (event.key === "ArrowDown") {
-        requestAnimationFrame(() => setCurrentGroup(0));
       }
     },
     [currentGroup],
@@ -70,19 +71,22 @@ const DisplayCards: React.FC<DisplayCardsProps> = ({ data, group, margin }) => {
   return (
     <div>
       <div className="container">
-        <div className="first-section">
+        <div className="change-deck-of-cards">
           {Object.keys(data).length > 1 && (
-            <div>
+            <>
               {Object.keys(data).map((_key, index) => (
                 <Button
+                  key={index}
                   text={(index + 1).toString()}
-                  className={`button-${index}`}
+                  className={`change-deck-button ${
+                    currentDeck === index ? "change-deck-button-enabled" : ""
+                  }`}
                   onClick={() => {
                     setCurrentDeck(index);
                   }}
                 />
               ))}
-            </div>
+            </>
           )}
         </div>
         <div className="second-section">

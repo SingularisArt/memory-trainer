@@ -11,22 +11,26 @@ import {
 
 import { FormatSeconds } from "../utils/misc";
 
+type ChartProps = {}
+
 const Chart = ({ data }) => {
+  console.log(data);
+
   const processData = (data) => {
     return data.map((item) => {
-      const time = FormatSeconds(item.finished_time);
+      const time = FormatSeconds(item.finishedTime);
 
       const yValue =
         item.item === "Cards"
-          ? item.number_of_items / 52
-          : item.number_of_items;
+          ? item.numberOfItems / 52
+          : item.numberOfItems;
       const tooltip = `Time: ${time}<br>Score: ${item.score*100}<br>`;
       const extraInfo =
         item.item === "Decks"
-          ? `Decks: ${item.number_of_items}`
-          : item.number_of_items === 52
+          ? `Decks: ${item.numberOfItems}`
+          : item.numberOfItems === 52
           ? "Decks: 1"
-          : `Cards: ${item.number_of_items}`;
+          : `Cards: ${item.numberOfItems}`;
 
       return { ...item, yValue, tooltip: tooltip + extraInfo };
     });

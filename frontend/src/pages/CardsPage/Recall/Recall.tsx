@@ -1,17 +1,19 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import { CardsData } from "../../../utils/redux";
-import { FormatSeconds } from "../../../utils/misc";
 import { updateCardsData } from "../../../store/actions/cardsActions";
+import { FormatSeconds } from "../../../utils/misc";
+import { CardsData } from "../../../utils/redux";
 
 import { mainTheme } from "../../../config/theme";
 
+import Button from "../../../components/Button";
 import CardGuess from "../../../components/CardGuess";
 import TimerHeader from "../../../components/TimerHeader/TimerHeader";
 
 import { memoryTypes } from "../../../config/theme";
 
 import "./Recall.css";
+import "../GlobalStyles.css";
 
 type RecallProps = {
   onClick: () => void;
@@ -19,9 +21,6 @@ type RecallProps = {
 
 const Recall: React.FC<RecallProps> = ({ onClick }) => {
   const { cardsData, dispatch } = CardsData();
-
-  const [activeCard, setActiveCard] = useState<number>(0);
-  const [currentDeck, _setCurrentDeck] = useState(0);
 
   const [deck] = useState<string[]>([
     "https://deckofcardsapi.com/static/img/AH.png",
@@ -81,39 +80,45 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
     "https://deckofcardsapi.com/static/img/KC.png",
   ]);
 
+  const numberOfCards =
+    cardsData.item === "Cards" ? cardsData.numberOfCards : 52;
+  const numberOfDecks =
+    cardsData.item === "Decks" ? cardsData.numberOfDecks : 0;
+
+  const [activeCard, setActiveCard] = useState<number>(0);
+  const [currentDeck, setCurrentDeck] = useState<number>(0);
+
+  const [memorizedDecks, setMemorizedDecks] = useState<{ [deckId: number]: string[] }>(() => {
+    const initialDecks: { [deckId: number]: string[] } = {};
+
+    if (numberOfDecks === 0) initialDecks[0] = Array(numberOfCards).fill("");
+    else {
+      for (let i = 0; i < numberOfDecks; i++) {
+        initialDecks[i] = Array(numberOfCards).fill("");
+      }
+    }
+
+    return initialDecks;
+  });
+
+  const [imageVisibility, setImageVisibility] = useState<{ [deckId: number]: boolean[] }>(() => {
+    const initialDecks: { [deckId: number]: boolean[] } = {};
+
+    if (numberOfDecks === 0) initialDecks[0] = Array(numberOfCards).fill(true);
+    else {
+      for (let i = 0; i < numberOfDecks; i++) {
+        initialDecks[i] = Array(numberOfCards).fill(true);
+      }
+    }
+
+    return initialDecks;
+  });
+
   const currentlySelectedData = cardsData.decks[currentDeck];
   const seconds = FormatSeconds(cardsData.finishedMemorizationTime);
 
   const handleOnClick = () => {
-    let inputDeck: { [id: number]: string[] } = {};
-    let numberOfDecks: number = 1;
-    let numberOfCards: number = 52;
-
-    if (cardsData.item == "Cards") numberOfCards = cardsData.numberOfCards;
-    else if (cardsData.item == "Decks") numberOfCards = 52;
-
-    if (cardsData.item == "Cards") numberOfDecks = 1;
-    else if (cardsData.item == "Decks") numberOfDecks = cardsData.numberOfDecks;
-
-    for (let deckIndex = 0; deckIndex < numberOfDecks; deckIndex++) {
-      for (let cardIndex = 0; cardIndex < numberOfCards; cardIndex++) {
-        const card = document.querySelector(
-          `.card-${cardIndex}`,
-        ) as HTMLImageElement;
-
-        try {
-          const background = card.style.backgroundImage.slice(5, -2);
-          inputDeck[deckIndex][cardIndex] = background;
-        } catch (error) {
-          inputDeck[deckIndex] = [];
-
-          const background = card.style.backgroundImage.slice(5, -2);
-          inputDeck[deckIndex][cardIndex] = background;
-        }
-      }
-    }
-
-    dispatch(updateCardsData({ memorizedDecks: inputDeck }));
+    dispatch(updateCardsData({ memorizedDecks: memorizedDecks }));
     onClick();
   };
 
@@ -123,7 +128,6 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
         requestAnimationFrame(() =>
           setActiveCard((prev) => {
             if (prev > 0) {
-              console.log(prev, prev-1);
               if (prev === 0) return 0;
               return prev - 1;
             }
@@ -141,7 +145,7 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
       }
       if (event.key === "ArrowDown") {
         requestAnimationFrame(() =>
-          setActiveCard(currentlySelectedData.length),
+          setActiveCard(currentlySelectedData.length - 1),
         );
       }
     },
@@ -164,13 +168,12 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
   };
 
   const toggleImageVisibility = (cardNumber: number, isVisible: boolean) => {
-    const image = document.querySelector(
-      `.image-${cardNumber}`,
-    ) as HTMLImageElement;
-
-    if (image) {
-      image.style.display = isVisible ? "block" : "none";
-    }
+    setImageVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [currentDeck]: prevVisibility[currentDeck].map((value, index) =>
+        index === cardNumber ? isVisible : value,
+      ),
+    }));
   };
 
   const handleImageClick = (cardNumber: number) => {
@@ -178,24 +181,29 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
       `.card-${activeCard}`,
     ) as HTMLImageElement;
 
-    if (!card) return;
-
     const image = document.querySelector(
       `.image-${cardNumber}`,
     ) as HTMLImageElement;
 
     if (image && card) {
-      const background = card.style.backgroundImage.slice(5, -2);
+      let background = card.style.backgroundImage.slice(5, -2);
       if (background) {
         const index = deck.indexOf(background);
         toggleImageVisibility(index, true);
       }
+      background = deck[cardNumber];
+
+      const newMemorizedDecks = { ...memorizedDecks };
+      newMemorizedDecks[currentDeck][activeCard] = background;
+      setMemorizedDecks(newMemorizedDecks);
 
       toggleImageVisibility(cardNumber, false);
 
       card.style.backgroundImage = `url(${deck[cardNumber]})`;
       card.style.backgroundSize = "contain";
       card.style.border = "";
+
+      setActiveCard((prev) => prev + 1);
     }
   };
 
@@ -205,14 +213,29 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
         color={memoryTypes.cards.color}
         title={`Cards (${seconds})`}
         time={cardsData.maxRecallTime}
-        // finish={() => handleOnClick()}
-        finish={() => {}}
+        finish={() => handleOnClick()}
+        // finish={() => {}}
         text="Recall ends in"
         button="finished"
       />
 
+      <div className="change-deck-of-cards">
+        {numberOfDecks > 1
+          ? Array.from({ length: numberOfDecks }, (_, index) => (
+              <Button
+                key={index}
+                text={(index + 1).toString()}
+                  className={`change-deck-button ${
+                    currentDeck === index ? "change-deck-button-enabled" : ""
+                  }`}
+                onClick={() => setCurrentDeck(index)}
+              />
+            ))
+          : null}
+      </div>
+
       <div className="input-section">
-        {Array.from({ length: cardsData.numberOfCards }, (_, index) => (
+        {Array.from({ length: numberOfCards }, (_, index) => (
           <CardGuess
             key={index}
             className={`card-${index}`}
@@ -230,23 +253,28 @@ const Recall: React.FC<RecallProps> = ({ onClick }) => {
             activeColor={mainTheme.cardColor.activeCardColor}
             onClick={() => handleCardClick(index)}
             isActive={activeCard === index}
+            cardImage={memorizedDecks[currentDeck][index]}
           />
         ))}
       </div>
       <div className="deck-of-cards">
-        {deck.map((card, index) => (
-          <img
-            key={index}
-            className={`image image-${index}`}
-            style={{
-              marginLeft: index === 0 ? "0px" : "-140px",
-            }}
-            width={157}
-            height={219}
-            src={card}
-            onClick={() => handleImageClick(index)}
-          />
-        ))}
+        {deck.map((card, index) => {
+          if (!imageVisibility[currentDeck][index]) return null;
+
+          return (
+            <img
+              key={index}
+              className={`image image-${index}`}
+              style={{
+                marginLeft: index === 0 ? "0px" : "-140px",
+              }}
+              width={157}
+              height={219}
+              src={card}
+              onClick={() => handleImageClick(index)}
+            />
+          );
+        })}
       </div>
     </div>
   );

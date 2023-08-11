@@ -5,7 +5,7 @@ import Memorize from "../Memorize/Memorize";
 import Preparation from "../Preparation";
 import Recall from "../Recall/Recall";
 import RecallBreak from "../RecallBreak";
-import Score from "../Score/Score";
+import Score from "../Score";
 
 import "./CardsPage.css";
 

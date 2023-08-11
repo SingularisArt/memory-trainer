@@ -1,6 +1,0 @@
-.status-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  row-gap: 15px;
-}

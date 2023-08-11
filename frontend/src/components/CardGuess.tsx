@@ -37,6 +37,7 @@ const CardGuess: React.FC<CardProps> = ({
     height: height,
     backgroundColor: isActive ? activeColor : isHovered ? hoverColor : color,
     borderRadius: 10,
+    backgroundImage: cardImage ? `url(${cardImage})` : "none",
     border: !cardImage ? "1px solid black" : "none",
     marginTop: "12px",
   };
