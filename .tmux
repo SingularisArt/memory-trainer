@@ -1,7 +1,5 @@
 #!/usr/bin/bash
 
-source info.sh
-
 set -e
 SESSION_NAME="Memory Trainer"
 
@@ -31,6 +29,12 @@ tmux send-keys -t "$SESSION_NAME" "cd frontend; nvim" Enter
 tmux new-window -t "$SESSION_NAME"
 
 tmux rename-window -t "$SESSION_NAME" "MariDB"
-tmux send-keys -t "$SESSION_NAME" "mariadb --user=\"$USERNAME\" --password=\"$PASSWORD\"" Enter
+
+password="$HOME/.local/bin/get-password programming/mariadb/account-1"
+username="$HOME/.local/bin/get-password programming/mariadb/account-1 'account'"
+
+tmux send-keys -t "$SESSION_NAME" \
+  "mariadb --user=\"\`$username\`\" --password=\"\`$password\`\"" \
+  Enter
 
 eval "$tmuxAttachCommand"
