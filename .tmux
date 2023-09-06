@@ -17,7 +17,7 @@ fi
 tmux new-session -d -s "$SESSION_NAME"
 
 tmux rename-window -t "$SESSION_NAME" "Server"
-tmux send-keys -t "$SESSION_NAME" "cd frontend; clear; npm start" Enter
+tmux send-keys -t "$SESSION_NAME" "cd clear; npm start" Enter
 tmux split-window -t "$SESSION_NAME" -h
 tmux send-keys -t "$SESSION_NAME" "cd server; clear; npm start" Enter
 
