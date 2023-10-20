@@ -37,4 +37,9 @@ tmux send-keys -t "$SESSION_NAME" \
   "mariadb --user=\"\`$username\`\" --password=\"\`$password\`\"" \
   Enter
 
+tmux new-window -t "$SESSION_NAME"
+
+tmux rename-window -t "$SESSION_NAME" "Git"
+tmux send-keys -t "$SESSION_NAME" "clear; wgs" Enter
+
 eval "$tmuxAttachCommand"
