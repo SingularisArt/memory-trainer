@@ -35,8 +35,8 @@ type CardsState = {
   numberOfItems: number;
   actualCardData: string;
   memorizedCardData: string;
-  numberOfCorrectlyMemorizedItems: number,
-  numberOfIncorrectlyMemorizedItems: number,
+  numberOfCorrectlyMemorizedItems: number;
+  numberOfIncorrectlyMemorizedItems: number;
 };
 
 type FormatState =
@@ -62,7 +62,7 @@ const Stats: React.FC<StatsProps> = () => {
   const [format, setFormat] = useState<FormatState>("MMM yyyy");
   const [interval, setInterval] = useState<IntervalState>("Months");
   const [data, setData] = useState<CardsState[]>(cards);
-  const [selectedData, setSelectedData] = useState<typeof cards | null>(null);
+  const [selectedData, setSelectedData] = useState<CardsState | null>(null);
   const [dateRange, setDateRange] = useState<DateRange>("allTime");
   const [currentDeck, setCurrentDeck] = useState<number>(0);
 
@@ -221,7 +221,7 @@ const Stats: React.FC<StatsProps> = () => {
     if (!selectedData) return <></>;
 
     const data = selectedData.memorizedCardData;
-    if (Object.keys(data) == 0) return <></>;
+    if (Object.keys(data).length === 0) return <></>;
 
     return (
       <div className="change-deck-of-cards">
